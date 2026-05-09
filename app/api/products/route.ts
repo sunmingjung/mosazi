@@ -21,14 +21,12 @@ export async function GET(request: NextRequest) {
   const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
   const pageSize = 48;
 
-  const EXCLUDED = ["여성의류", "남성의류", "여성슈즈", "남성슈즈"];
   const conditions: string[] = [
     "is_sold_out = 0",
     "thumbnail_url IS NOT NULL",
     "display_price > 0",
-    `large_category_name NOT IN (${EXCLUDED.map(() => "?").join(",")})`,
   ];
-  const params: (string | number)[] = [...EXCLUDED];
+  const params: (string | number)[] = [];
 
   if (category) {
     conditions.push("large_category_name = ?");
