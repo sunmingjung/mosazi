@@ -1,7 +1,28 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // better-sqlite3 native module - webpack이 번들링하지 않도록
+  serverExternalPackages: ["better-sqlite3"],
+
+  // Vercel 배포 시 SQLite 파일을 서버리스 함수 번들에 포함
+  outputFileTracingIncludes: {
+    "/api/**": ["./products_db.sqlite"],
+  },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "img.29cm.co.kr",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "image.hago.kr",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
