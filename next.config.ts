@@ -13,12 +13,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "img.29cm.co.kr",
+        hostname: "**",
         pathname: "/**",
       },
       {
-        protocol: "https",
-        hostname: "image.hago.kr",
+        protocol: "http",
+        hostname: "**",
         pathname: "/**",
       },
     ],
