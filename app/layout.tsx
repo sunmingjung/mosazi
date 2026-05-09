@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GiftPick — 감도있는 선물 추천",
-  description: "29CM 상품 기반 선물 추천 서비스",
+  title: "Mosazi — 감도있는 선물 추천",
+  description: "29CM, 하고하우스 상품 기반 선물 추천 서비스",
 };
 
 export default function RootLayout({
