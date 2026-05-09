@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
   const sort = searchParams.get("sort") || "rarity";
   const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
   const pageSize = 48;
+  const query = (searchParams.get("q") || "").trim();
 
   const EXCLUDED = ["여성의류", "남성의류", "여성슈즈", "남성슈즈"];
   const conditions: string[] = [
@@ -29,6 +30,15 @@ export async function GET(request: NextRequest) {
     `large_category_name NOT IN (${EXCLUDED.map(() => "?").join(",")})`,
   ];
   const params: (string | number)[] = [...EXCLUDED];
+
+  // 키워드 검색: 공백 구분 각 토큰을 AND로 검색
+  if (query) {
+    const tokens = query.split(/\s+/).filter(Boolean).slice(0, 5);
+    for (const token of tokens) {
+      conditions.push("search_text LIKE ?");
+      params.push(`%${token.toLowerCase()}%`);
+    }
+  }
 
   if (category) {
     conditions.push("large_category_name = ?");
@@ -55,7 +65,11 @@ export async function GET(request: NextRequest) {
     price_desc:  "display_price DESC",
     new:         "(is_new_arrival + is_recently_launched) DESC, rarity_score DESC",
   };
-  const order = orderMap[sort] ?? orderMap.rarity;
+  // 검색 중에는 기본 정렬을 rarity 기준으로 (like_count NULLS LAST로 외부상품 밀리지 않게)
+  const defaultOrder = query
+    ? "like_count DESC NULLS LAST, rarity_score DESC"
+    : orderMap.rarity;
+  const order = orderMap[sort] ?? defaultOrder;
 
   const db = getDb();
   const total = (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import ProductCard from "./components/ProductCard";
 import FilterBar from "./components/FilterBar";
 import RecommendModal from "./components/RecommendModal";
@@ -38,6 +38,7 @@ export interface Filters {
   price_range: string;
   new_only: boolean;
   sort: string;
+  q: string;
 }
 
 const DEFAULT_FILTERS: Filters = {
@@ -45,16 +46,19 @@ const DEFAULT_FILTERS: Filters = {
   price_range: "",
   new_only: false,
   sort: "rarity",
+  q: "",
 };
 
 export default function Home() {
   const [showRecommend, setShowRecommend] = useState(false);
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
+  const [searchInput, setSearchInput] = useState("");
   const [products, setProducts] = useState<ApiProduct[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const fetchProducts = useCallback(async (f: Filters, p: number) => {
     setLoading(true);
@@ -63,6 +67,7 @@ export default function Home() {
     if (f.price_range) params.set("price_range", f.price_range);
     if (f.new_only) params.set("new_only", "1");
     if (f.sort) params.set("sort", f.sort);
+    if (f.q) params.set("q", f.q);
     params.set("page", String(p));
 
     const res = await fetch(`/api/products?${params}`);
@@ -72,6 +77,14 @@ export default function Home() {
     setTotalPages(data.totalPages);
     setLoading(false);
   }, []);
+
+  const handleSearchChange = (value: string) => {
+    setSearchInput(value);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      setFilters((prev) => ({ ...prev, q: value }));
+    }, 350);
+  };
 
   useEffect(() => {
     setPage(1);
@@ -89,14 +102,32 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-3">
-          <h1 className="text-xl font-bold tracking-tight">🎁 Mosazi</h1>
-          <span className="text-sm text-gray-500">감도있는 선물 찾기</span>
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
+          <h1 className="text-xl font-bold tracking-tight shrink-0">🎁 Mosazi</h1>
+          {/* 검색바 */}
+          <div className="flex-1 max-w-md relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</span>
+            <input
+              type="text"
+              value={searchInput}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              placeholder="기타, 캔들, 키링, 도자기..."
+              className="w-full pl-8 pr-3 py-2 text-sm rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black/10 focus:bg-white transition-all"
+            />
+            {searchInput && (
+              <button
+                onClick={() => { setSearchInput(""); handleSearchChange(""); }}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs"
+              >
+                ✕
+              </button>
+            )}
+          </div>
           <button
             onClick={() => setShowRecommend(true)}
-            className="ml-auto bg-black text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-gray-800 active:scale-[0.97] transition-all"
+            className="ml-auto shrink-0 bg-black text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-gray-800 active:scale-[0.97] transition-all"
           >
-            🎲 선물 추천받기
+            🎲 추천받기
           </button>
         </div>
       </header>
@@ -120,8 +151,11 @@ export default function Home() {
           </div>
         ) : products.length === 0 ? (
           <div className="py-20 text-center text-gray-400">
-            <p className="text-4xl mb-3">🔍</p>
-            <p>조건에 맞는 상품이 없어요</p>
+            <p className="text-4xl mb-3">{filters.q ? "🔍" : "😶"}</p>
+            <p>{filters.q ? `"${filters.q}" 검색 결과가 없어요` : "조건에 맞는 상품이 없어요"}</p>
+            {filters.q && (
+              <p className="text-xs mt-1">다른 키워드로 검색해보세요 (예: guitar, 향수, keychain)</p>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
