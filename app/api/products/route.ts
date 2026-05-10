@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (category) {
-    conditions.push("large_category_name = ?");
+    conditions.push("shop_category = ?");
     params.push(category);
   }
 
