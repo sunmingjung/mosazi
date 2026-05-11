@@ -111,12 +111,7 @@ export async function GET(request: NextRequest) {
     : orderMap.rarity;
   const order = orderMap[sort] ?? defaultOrder;
 
-  let db;
-  try {
-    db = getDb();
-  } catch (e) {
-    return Response.json({ error: "db_init", detail: String(e) }, { status: 500 });
-  }
+  const db = getDb();
   const total = (
     db.prepare(`SELECT COUNT(*) as cnt FROM items ${where}`).get(...params) as { cnt: number }
   ).cnt;
