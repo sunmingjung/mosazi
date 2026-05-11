@@ -30,12 +30,53 @@ export async function GET(request: NextRequest) {
   ];
   const params: (string | number)[] = [];
 
-  // 키워드 검색: 공백 구분 각 토큰을 AND로 검색
+  // 검색 동의어: 사용자가 검색하는 단어 → 카테고리 + 아이템명 키워드로 확장
+  // 예: "인테리어" 검색 → shop_category="리빙/홈데코" OR item_name 에 시계/꽃병/조명 등 포함
+  const SEARCH_SYNONYMS: Record<string, { categories: string[]; keywords: string[] }> = {
+    "인테리어":  { categories: ["리빙/홈데코"], keywords: ["오브제", "조명", "시계", "꽃병", "화병", "텀블러", "보틀", "쿠션", "데코", "포스터"] },
+    "리빙":      { categories: ["리빙/홈데코"], keywords: ["오브제", "조명"] },
+    "홈데코":    { categories: ["리빙/홈데코"], keywords: ["오브제", "데코"] },
+    "주방":      { categories: ["세라믹/식기"], keywords: ["주방", "그릇", "머그", "컵", "접시"] },
+    "식기":      { categories: ["세라믹/식기"], keywords: ["그릇", "머그", "컵", "접시", "도자"] },
+    "향":        { categories: ["향/프래그런스"], keywords: ["향수", "캔들", "디퓨저", "인센스"] },
+    "향수":      { categories: ["향/프래그런스"], keywords: ["향수", "퍼퓸"] },
+    "캔들":      { categories: ["향/프래그런스"], keywords: ["캔들", "candle"] },
+    "문구":      { categories: ["문구/아트"],     keywords: ["노트", "엽서", "포스터", "스티커"] },
+    "패션":      { categories: ["패션/의류"],     keywords: ["슈즈", "신발"] },
+    "액세서리":  { categories: ["액세서리"],      keywords: ["귀걸이", "목걸이", "반지", "가방"] },
+    "주얼리":    { categories: ["액세서리"],      keywords: ["귀걸이", "목걸이", "반지", "팔찌", "주얼리"] },
+    "가방":      { categories: ["액세서리"],      keywords: ["가방", "백", "파우치"] },
+    "패브릭":    { categories: ["패브릭/텍스타일"], keywords: ["쿠션", "담요", "러그"] },
+    "뷰티":      { categories: ["뷰티"],          keywords: ["스킨", "세럼", "립밤"] },
+    "식품":      { categories: ["식품/음료"],     keywords: ["원두", "차", "초콜릿"] },
+    "음료":      { categories: ["식품/음료"],     keywords: ["원두", "차"] },
+    "선물":      { categories: [], keywords: ["선물", "기프트", "gift"] },
+  };
+
+  // 키워드 검색: 공백 구분 각 토큰을 AND로 검색 (각 토큰은 동의어 OR 그룹)
   if (query) {
     const tokens = query.split(/\s+/).filter(Boolean).slice(0, 5);
     for (const token of tokens) {
-      conditions.push("search_text LIKE ?");
-      params.push(`%${token.toLowerCase()}%`);
+      const lower = token.toLowerCase();
+      const syn = SEARCH_SYNONYMS[lower];
+      if (syn) {
+        const clauses: string[] = [];
+        for (const cat of syn.categories) {
+          clauses.push("shop_category = ?");
+          params.push(cat);
+        }
+        for (const kw of syn.keywords) {
+          clauses.push("search_text LIKE ?");
+          params.push(`%${kw.toLowerCase()}%`);
+        }
+        // 원래 토큰도 fallback으로 포함
+        clauses.push("search_text LIKE ?");
+        params.push(`%${lower}%`);
+        conditions.push(`(${clauses.join(" OR ")})`);
+      } else {
+        conditions.push("search_text LIKE ?");
+        params.push(`%${lower}%`);
+      }
     }
   }
 
