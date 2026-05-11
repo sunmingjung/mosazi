@@ -25,7 +25,8 @@ export async function GET(request: NextRequest) {
   const conditions: string[] = [
     "is_sold_out = 0",
     "thumbnail_url IS NOT NULL",
-    "display_price >= 5000",
+    // KRW 는 5000원 이상, USD 는 5달러 이상 (≒ 7000원)
+    "((COALESCE(currency, 'KRW') = 'KRW' AND display_price >= 5000) OR (currency = 'USD' AND display_price >= 5))",
     "shop_category IS NOT NULL",
   ];
   const params: (string | number)[] = [];
@@ -124,7 +125,7 @@ export async function GET(request: NextRequest) {
       `SELECT item_id, item_name, brand_name, brand_name_eng, display_price, original_price,
               sale_rate, is_new_arrival, is_recently_launched, review_score, review_count,
               like_count, large_category_name, middle_category_name, thumbnail_url, product_url,
-              text_badges, feed_contexts, rarity_score
+              text_badges, feed_contexts, rarity_score, COALESCE(currency, 'KRW') as currency
        FROM items ${where}
        ORDER BY ${order}
        LIMIT ? OFFSET ?`

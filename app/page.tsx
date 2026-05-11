@@ -24,6 +24,7 @@ export interface ApiProduct {
   product_url: string | null;
   text_badges: string | null;
   feed_contexts: string | null;
+  currency?: string | null;
 }
 
 interface ApiResponse {

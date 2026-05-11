@@ -29,6 +29,12 @@ interface Props {
   product: ApiProduct;
 }
 
+function formatPrice(price: number | null | undefined, currency: string | null | undefined): string {
+  const value = price ?? 0;
+  if (currency === "USD") return `$${value.toLocaleString()}`;
+  return `${value.toLocaleString()}원`;
+}
+
 export default function ProductCard({ product: p }: Props) {
   const editorialCopy = getEditorialCopy(p.feed_contexts);
   const isNew = p.is_new_arrival === 1 || p.is_recently_launched === 1;
@@ -82,11 +88,11 @@ export default function ProductCard({ product: p }: Props) {
         {/* Price */}
         <div className="flex items-baseline gap-1.5 mb-2">
           <span className="text-base font-bold text-gray-900">
-            {(p.display_price ?? 0).toLocaleString()}원
+            {formatPrice(p.display_price, p.currency)}
           </span>
           {p.original_price && p.original_price !== p.display_price && (
             <span className="text-xs text-gray-400 line-through">
-              {p.original_price.toLocaleString()}원
+              {formatPrice(p.original_price, p.currency)}
             </span>
           )}
         </div>
