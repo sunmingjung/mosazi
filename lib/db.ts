@@ -43,7 +43,15 @@ function walkFind(dir: string, name: string, depth: number): string | null {
 
 export function getDb(): Database.Database {
   if (!_db) {
-    _db = new Database(findDb(), { readonly: true });
+    const dbPath = findDb();
+    const stat = (() => { try { return fs.statSync(dbPath); } catch (e) { return null; } })();
+    console.log("[db] resolved path:", dbPath, "size:", stat?.size, "cwd:", process.cwd());
+    try {
+      _db = new Database(dbPath, { readonly: true, fileMustExist: true });
+    } catch (e) {
+      console.error("[db] open failed:", dbPath, "error:", e);
+      throw e;
+    }
   }
   return _db;
 }
