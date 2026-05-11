@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   const conditions: string[] = [
     "is_sold_out = 0",
     "thumbnail_url IS NOT NULL",
-    "display_price > 0",
+    "display_price >= 5000",
     "shop_category IS NOT NULL",
   ];
   const params: (string | number)[] = [];
