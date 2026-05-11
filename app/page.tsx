@@ -123,12 +123,20 @@ export default function Home() {
               </button>
             )}
           </div>
-          <button
-            onClick={() => setShowRecommend(true)}
-            className="ml-auto shrink-0 bg-black text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-gray-800 active:scale-[0.97] transition-all"
-          >
-            🎲 추천받기
-          </button>
+          <div className="ml-auto shrink-0 flex gap-2">
+            <button
+              onClick={() => setShowRecommend(true)}
+              className="bg-black text-white text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl hover:bg-gray-800 active:scale-[0.97] transition-all"
+            >
+              🎲 <span className="hidden sm:inline">주사위 굴리기</span><span className="sm:hidden">주사위</span>
+            </button>
+            <a
+              href="/consult"
+              className="bg-pink-500 text-white text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl hover:bg-pink-600 active:scale-[0.97] transition-all"
+            >
+              💬 <span className="hidden sm:inline">큐레이터 상담</span><span className="sm:hidden">상담</span>
+            </a>
+          </div>
         </div>
       </header>
 
