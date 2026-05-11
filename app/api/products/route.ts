@@ -22,14 +22,13 @@ export async function GET(request: NextRequest) {
   const pageSize = 48;
   const query = (searchParams.get("q") || "").trim();
 
-  const EXCLUDED = ["여성의류", "남성의류", "여성슈즈", "남성슈즈"];
   const conditions: string[] = [
     "is_sold_out = 0",
     "thumbnail_url IS NOT NULL",
     "display_price > 0",
-    `large_category_name NOT IN (${EXCLUDED.map(() => "?").join(",")})`,
+    "shop_category IS NOT NULL",
   ];
-  const params: (string | number)[] = [...EXCLUDED];
+  const params: (string | number)[] = [];
 
   // 키워드 검색: 공백 구분 각 토큰을 AND로 검색
   if (query) {
@@ -73,7 +72,7 @@ export async function GET(request: NextRequest) {
 
   const db = getDb();
   const total = (
-    db.prepare(`SELECT COUNT(*) as cnt FROM products ${where}`).get(...params) as { cnt: number }
+    db.prepare(`SELECT COUNT(*) as cnt FROM items ${where}`).get(...params) as { cnt: number }
   ).cnt;
 
   const products = db
@@ -82,7 +81,7 @@ export async function GET(request: NextRequest) {
               sale_rate, is_new_arrival, is_recently_launched, review_score, review_count,
               like_count, large_category_name, middle_category_name, thumbnail_url, product_url,
               text_badges, feed_contexts, rarity_score
-       FROM products ${where}
+       FROM items ${where}
        ORDER BY ${order}
        LIMIT ? OFFSET ?`
     )

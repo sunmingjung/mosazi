@@ -112,7 +112,7 @@ export default function Home() {
               value={searchInput}
               onChange={(e) => handleSearchChange(e.target.value)}
               placeholder="기타, 캔들, 키링, 도자기..."
-              className="w-full pl-8 pr-3 py-2 text-sm rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black/10 focus:bg-white transition-all"
+              className="w-full pl-8 pr-3 py-2 text-sm rounded-xl border border-gray-200 bg-gray-50 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-black/10 focus:bg-white transition-all"
             />
             {searchInput && (
               <button
@@ -138,8 +138,8 @@ export default function Home() {
 
       <main className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-5">
-          <p className="text-sm text-gray-500">
-            {loading ? "로딩 중..." : `총 ${total.toLocaleString()}개 상품`}
+          <p className="text-sm font-medium text-gray-700">
+            {loading ? "로딩 중..." : `총 ${total.toLocaleString()}개`}
           </p>
         </div>
 
