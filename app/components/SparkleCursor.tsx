@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 const SPARKLE_COUNT = 40;
-const GOLD_COLORS = ["#FFD700", "#FFC107", "#FFB300", "#FFCA28", "#FFE082"];
+const PINK_COLORS = ["#FF69B4", "#FF85C0", "#FFA8D6", "#FFB6C1", "#FFD1DC"];
 
 export default function SparkleCursor() {
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function SparkleCursor() {
     };
 
     for (let i = 0; i < SPARKLE_COUNT; i++) {
-      const color = GOLD_COLORS[i % GOLD_COLORS.length];
+      const color = PINK_COLORS[i % PINK_COLORS.length];
 
       const tiny = createDiv(3, 3, color);
       tiny.style.borderRadius = "50%";
