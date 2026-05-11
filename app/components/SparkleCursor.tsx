@@ -48,21 +48,21 @@ export default function SparkleCursor() {
       document.body.appendChild(tiny);
       tinies.push(tiny);
 
-      // Plus-shape star: outer container + 2 inner bars
-      const star = createDiv(5, 5, "transparent");
+      // Plus-shape star: 7x7 outer container + 2 inner bars (vBar vertical, hBar horizontal)
+      const star = createDiv(7, 7, "transparent");
       star.style.boxShadow = "none";
-      const vBar = createDiv(5, 1, color);
-      const hBar = createDiv(1, 5, color);
+      const vBar = createDiv(7, 1, color); // vertical: 7h x 1w
+      const hBar = createDiv(1, 7, color); // horizontal: 1h x 7w
       vBar.style.position = "absolute";
       hBar.style.position = "absolute";
-      vBar.style.top = "2px";
-      vBar.style.left = "0";
-      hBar.style.top = "0";
-      hBar.style.left = "2px";
+      vBar.style.top = "0";
+      vBar.style.left = "3px";   // center horizontally (7/2 = 3)
+      hBar.style.top = "3px";    // center vertically
+      hBar.style.left = "0";
       vBar.style.visibility = "visible";
       hBar.style.visibility = "visible";
-      vBar.style.boxShadow = `0 0 4px ${color}`;
-      hBar.style.boxShadow = `0 0 4px ${color}`;
+      vBar.style.boxShadow = `0 0 6px ${color}`;
+      hBar.style.boxShadow = `0 0 6px ${color}`;
       star.appendChild(vBar);
       star.appendChild(hBar);
       document.body.appendChild(star);
@@ -73,8 +73,8 @@ export default function SparkleCursor() {
       starv[i]--;
       if (starv[i] === 25) {
         const inner = stars[i].children;
-        if (inner[0]) (inner[0] as HTMLDivElement).style.height = "3px";
-        if (inner[1]) (inner[1] as HTMLDivElement).style.width = "3px";
+        if (inner[0]) (inner[0] as HTMLDivElement).style.height = "5px";
+        if (inner[1]) (inner[1] as HTMLDivElement).style.width = "5px";
       }
       if (starv[i] > 0) {
         stary[i] += 1 + Math.random() * 3;
@@ -134,8 +134,8 @@ export default function SparkleCursor() {
             stars[c].style.left = x + "px";
             stars[c].style.top = y + "px";
             const inner = stars[c].children;
-            if (inner[0]) (inner[0] as HTMLDivElement).style.height = "5px";
-            if (inner[1]) (inner[1] as HTMLDivElement).style.width = "5px";
+            if (inner[0]) (inner[0] as HTMLDivElement).style.height = "7px";
+            if (inner[1]) (inner[1] as HTMLDivElement).style.width = "7px";
             stars[c].style.visibility = "visible";
             starv[c] = 50;
             break;
