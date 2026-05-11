@@ -43,15 +43,14 @@ function walkFind(dir: string, name: string, depth: number): string | null {
 
 export function getDb(): Database.Database {
   if (!_db) {
-    const dbPath = findDb();
-    const stat = (() => { try { return fs.statSync(dbPath); } catch (e) { return null; } })();
-    console.log("[db] resolved path:", dbPath, "size:", stat?.size, "cwd:", process.cwd());
-    try {
-      _db = new Database(dbPath, { readonly: true, fileMustExist: true });
-    } catch (e) {
-      console.error("[db] open failed:", dbPath, "error:", e);
-      throw e;
+    const srcPath = findDb();
+    // Vercel 서버리스: /var/task 는 readonly. SQLite 가 journal/WAL 만들려면 쓰기 가능한 위치 필요.
+    // /tmp 는 쓰기 가능 (instance 단위, cold start 마다 초기화) 이므로 거기 복사 후 사용.
+    const tmpPath = "/tmp/products_db.sqlite";
+    if (!fs.existsSync(tmpPath) || fs.statSync(tmpPath).size !== fs.statSync(srcPath).size) {
+      fs.copyFileSync(srcPath, tmpPath);
     }
+    _db = new Database(tmpPath, { readonly: true, fileMustExist: true });
   }
   return _db;
 }
