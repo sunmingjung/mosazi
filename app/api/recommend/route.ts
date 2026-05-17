@@ -174,7 +174,7 @@ export async function GET(request: NextRequest) {
          ORDER BY ${orderBy}
          LIMIT ?`
       )
-      .all(...scoreParams, cat, need * 25) as Row[];
+      .all(cat, ...scoreParams, need * 25) as Row[];
 
     const weighted = pool.map((r) => ({
       ...r,
