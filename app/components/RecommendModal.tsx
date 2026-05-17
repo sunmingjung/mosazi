@@ -30,10 +30,47 @@ const PRICE_OPTIONS = [
   { value: "200000+", label: "20만원+", sub: "럭셔리" },
 ];
 
+const OCCASION_OPTIONS = [
+  { value: "birthday",     emoji: "🎂", label: "생일" },
+  { value: "wedding",      emoji: "💍", label: "결혼" },
+  { value: "housewarming", emoji: "🏠", label: "집들이" },
+  { value: "promotion",    emoji: "🎉", label: "승진/취업" },
+  { value: "graduation",   emoji: "🎓", label: "졸업/입학" },
+  { value: "holiday",      emoji: "🌙", label: "명절" },
+  { value: "thank",        emoji: "💝", label: "답례" },
+];
+
+const MOOD_OPTIONS = [
+  { value: "cute",    emoji: "🧸", label: "귀여움" },
+  { value: "chic",    emoji: "🖤", label: "시크/모던" },
+  { value: "unique",  emoji: "🔮", label: "유니크" },
+  { value: "natural", emoji: "🌿", label: "내추럴" },
+  { value: "warm",    emoji: "☕", label: "따뜻함" },
+  { value: "vintage", emoji: "📻", label: "빈티지" },
+];
+
+const RELATIONSHIP_OPTIONS = [
+  { value: "self",      emoji: "✨", label: "본인" },
+  { value: "parent",    emoji: "👨‍👩‍👧", label: "부모님" },
+  { value: "partner",   emoji: "💕", label: "연인" },
+  { value: "friend",    emoji: "🧑‍🤝‍🧑", label: "친구" },
+  { value: "colleague", emoji: "💼", label: "동료" },
+  { value: "boss",      emoji: "🤝", label: "상사" },
+  { value: "child",     emoji: "👶", label: "조카/아이" },
+  { value: "sibling",   emoji: "👫", label: "형제자매" },
+];
+
+function toggle(arr: string[], v: string): string[] {
+  return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
+}
+
 export default function RecommendModal({ onClose }: Props) {
   const [age, setAge] = useState(28);
   const [gender, setGender] = useState<"F" | "M">("F");
   const [priceRange, setPriceRange] = useState("");
+  const [occasions, setOccasions] = useState<string[]>([]);
+  const [moods, setMoods] = useState<string[]>([]);
+  const [relationships, setRelationships] = useState<string[]>([]);
   const [result, setResult] = useState<RecommendResult | null>(null);
   const [loading, setLoading] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -49,6 +86,9 @@ export default function RecommendModal({ onClose }: Props) {
     setResult(null);
     const params = new URLSearchParams({ age: String(age), gender });
     if (priceRange) params.set("price_range", priceRange);
+    if (occasions.length) params.set("occasion", occasions.join(","));
+    if (moods.length) params.set("mood", moods.join(","));
+    if (relationships.length) params.set("relationship", relationships.join(","));
     const res = await fetch(`/api/recommend?${params}`);
     const data: RecommendResult = await res.json();
     setResult(data);
@@ -152,6 +192,71 @@ export default function RecommendModal({ onClose }: Props) {
                   <div className={`text-[11px] mt-0.5 ${priceRange === opt.value ? "text-gray-300" : "text-gray-400"}`}>
                     {opt.sub}
                   </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* ─── 선택 옵션 (개인화 ↑, 비워둬도 OK) ─── */}
+          <div className="pt-2 border-t border-gray-100">
+            <p className="text-xs text-gray-400 mb-3">아래는 선택사항 — 채울수록 더 정교한 추천 (정교도 ★{["", "★", "★★", "★★★"][Math.min(3, Math.ceil((occasions.length + moods.length + relationships.length) / 2))]})</p>
+          </div>
+
+          {/* 관계 */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">관계 <span className="text-xs text-gray-400 font-normal">(여러개 선택 가능)</span></label>
+            <div className="flex flex-wrap gap-2">
+              {RELATIONSHIP_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setRelationships(toggle(relationships, opt.value))}
+                  className={`px-3 py-1.5 rounded-full text-sm border-2 transition-all ${
+                    relationships.includes(opt.value)
+                      ? "border-pink-500 bg-pink-50 text-pink-700 font-semibold"
+                      : "border-gray-200 text-gray-600 hover:border-gray-400"
+                  }`}
+                >
+                  {opt.emoji} {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 상황 */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">상황·기념일</label>
+            <div className="flex flex-wrap gap-2">
+              {OCCASION_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setOccasions(toggle(occasions, opt.value))}
+                  className={`px-3 py-1.5 rounded-full text-sm border-2 transition-all ${
+                    occasions.includes(opt.value)
+                      ? "border-pink-500 bg-pink-50 text-pink-700 font-semibold"
+                      : "border-gray-200 text-gray-600 hover:border-gray-400"
+                  }`}
+                >
+                  {opt.emoji} {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 분위기 */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">분위기·감성</label>
+            <div className="flex flex-wrap gap-2">
+              {MOOD_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setMoods(toggle(moods, opt.value))}
+                  className={`px-3 py-1.5 rounded-full text-sm border-2 transition-all ${
+                    moods.includes(opt.value)
+                      ? "border-pink-500 bg-pink-50 text-pink-700 font-semibold"
+                      : "border-gray-200 text-gray-600 hover:border-gray-400"
+                  }`}
+                >
+                  {opt.emoji} {opt.label}
                 </button>
               ))}
             </div>
