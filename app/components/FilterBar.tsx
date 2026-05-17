@@ -25,8 +25,9 @@ const PRICE_RANGES = [
 ];
 
 const SORT_OPTIONS = [
-  { label: "✦ 감도 순", value: "rarity" },
-  { label: "신상품 우선", value: "new" },
+  { label: "새로 들어온 순", value: "first_seen" },
+  { label: "감도 순", value: "rarity" },
+  { label: "신상품 순", value: "new" },
   { label: "좋아요 순", value: "like_count" },
   { label: "리뷰 순", value: "review_count" },
   { label: "낮은 가격순", value: "price_asc" },
@@ -38,15 +39,17 @@ interface Props {
   onChange: (next: Partial<Filters>) => void;
 }
 
+const selectCls =
+  "h-9 rounded-full border-2 border-[var(--border)] bg-white/80 px-4 pr-8 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--lavender)] cursor-pointer appearance-none transition-colors font-rounded";
+
 export default function FilterBar({ filters, onChange }: Props) {
   return (
-    <div className="bg-white border-b border-gray-100 sticky top-[57px] z-10">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
-        {/* Category */}
+    <div className="bg-white/50 backdrop-blur-sm border-b border-[var(--border)] sticky top-[var(--header-h,124px)] z-10">
+      <div className="max-w-7xl mx-auto px-5 py-3 flex flex-wrap items-center gap-2">
         <select
           value={filters.category}
           onChange={(e) => onChange({ category: e.target.value })}
-          className="h-9 rounded-lg border border-gray-200 px-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black/10"
+          className={selectCls}
         >
           <option value="">전체 카테고리</option>
           {CATEGORIES.map((c) => (
@@ -56,11 +59,10 @@ export default function FilterBar({ filters, onChange }: Props) {
           ))}
         </select>
 
-        {/* Price Range */}
         <select
           value={filters.price_range}
           onChange={(e) => onChange({ price_range: e.target.value })}
-          className="h-9 rounded-lg border border-gray-200 px-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black/10"
+          className={selectCls}
         >
           {PRICE_RANGES.map((r) => (
             <option key={r.value} value={r.value}>
@@ -69,11 +71,10 @@ export default function FilterBar({ filters, onChange }: Props) {
           ))}
         </select>
 
-        {/* Sort */}
         <select
           value={filters.sort}
           onChange={(e) => onChange({ sort: e.target.value })}
-          className="h-9 rounded-lg border border-gray-200 px-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-black/10"
+          className={selectCls}
         >
           {SORT_OPTIONS.map((s) => (
             <option key={s.value} value={s.value}>
@@ -82,16 +83,15 @@ export default function FilterBar({ filters, onChange }: Props) {
           ))}
         </select>
 
-        {/* New Only Toggle */}
         <button
           onClick={() => onChange({ new_only: !filters.new_only })}
-          className={`h-9 px-4 rounded-lg text-sm font-medium border transition-colors ${
+          className={`h-9 px-4 rounded-full text-sm font-rounded border-2 transition-all ${
             filters.new_only
-              ? "bg-black text-white border-black"
-              : "bg-white text-gray-700 border-gray-200 hover:border-gray-400"
+              ? "bg-[var(--lavender-deep)] text-white border-transparent shadow-sm"
+              : "bg-white/80 text-[var(--muted)] border-[var(--border)] hover:border-[var(--lavender)] hover:text-[var(--lavender-deep)]"
           }`}
         >
-          ✨ 신상품만
+          신상품만
         </button>
       </div>
     </div>

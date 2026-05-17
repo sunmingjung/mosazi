@@ -1,21 +1,32 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Single_Day, Gowun_Dodum, Press_Start_2P } from "next/font/google";
 import "./globals.css";
-import SparkleCursor from "./components/SparkleCursor";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const singleDay = Single_Day({
+  variable: "--font-display",
+  weight: "400",
+});
+
+const gowunDodum = Gowun_Dodum({
+  variable: "--font-rounded",
   subsets: ["latin"],
+  weight: "400",
+});
+
+const pressStart = Press_Start_2P({
+  variable: "--font-pixel",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
-  title: "Mosazi — 감도있는 선물 추천",
-  description: "29CM, 하고하우스 상품 기반 선물 추천 서비스",
+  title: "MOSAZI — Curated Gifts",
+  description: "감도 있는 독립 브랜드 큐레이션",
 };
 
 export default function RootLayout({
@@ -25,11 +36,10 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="ko"
+      className={`${geistSans.variable} ${singleDay.variable} ${gowunDodum.variable} ${pressStart.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <SparkleCursor />
+      <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--ink)]">
         {children}
       </body>
     </html>

@@ -46,7 +46,7 @@ const DEFAULT_FILTERS: Filters = {
   category: "",
   price_range: "",
   new_only: false,
-  sort: "rarity",
+  sort: "first_seen",
   q: "",
 };
 
@@ -101,45 +101,65 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
-          <h1 className="text-xl font-bold tracking-tight shrink-0 flex items-center gap-1">
-            <span className="text-pink-400">🎀</span>
-            <span className="bg-gradient-to-r from-pink-500 to-pink-400 bg-clip-text text-transparent">Mosazi</span>
-          </h1>
-          {/* 검색바 */}
-          <div className="flex-1 max-w-md relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</span>
+    <div className="min-h-screen">
+      <header className="bg-white/70 backdrop-blur-md border-b border-[var(--border)] sticky top-0 z-20">
+        <div className="max-w-7xl mx-auto px-5 pt-5 pb-3 flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-end gap-2.5">
+            <h1 className="font-pixel text-2xl sm:text-3xl text-[var(--ink)] leading-none">MOSAZI</h1>
+            <span className="text-lg sm:text-xl text-[var(--lavender-deep)] pb-0.5 leading-none select-none" aria-hidden>
+              ૮ • ﻌ - ა
+            </span>
+            <div className="hidden md:flex flex-col gap-0.5 pb-1 ml-1">
+              <span className="font-pixel text-[8px] text-[var(--lavender)]">CURATED · GIFTS</span>
+              <span className="font-pixel text-[8px] text-[var(--subtle)]">2026 · KR</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            {/* 빠르게 고르기 — 클로우 카드 */}
+            <button
+              onClick={() => setShowRecommend(true)}
+              className="clow-card relative bg-grad-magic text-white text-[13px] font-semibold px-5 py-2.5 rounded-lg border-2 border-white/70"
+              style={{ boxShadow: "0 4px 14px -4px rgba(155, 134, 224, 0.55), inset 0 0 0 1px rgba(255,255,255,0.45)" }}
+            >
+              <span className="clow-twinkle absolute top-1 right-1.5 text-[10px] text-white">✦</span>
+              <span className="clow-twinkle delay absolute bottom-1 left-1.5 text-[9px] text-white">✧</span>
+              <span className="relative z-10 flex items-center gap-1.5">
+                <span className="text-base">🎲</span>
+                <span>빠르게 고르기</span>
+              </span>
+            </button>
+
+            {/* 직접 입력하기 — 라벤더 톤 */}
+            <a
+              href="/consult"
+              className="flex items-center gap-1.5 text-[13px] font-semibold text-[var(--lavender-deep)] bg-[var(--lavender-soft)] border border-[var(--lavender)]/50 px-4 py-2.5 rounded-lg hover:bg-white transition-colors"
+            >
+              <span className="text-base">✨</span>
+              <span>직접 입력하기</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-5 pb-4 flex items-center gap-3">
+          <div className="flex-1 max-w-xl relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--lavender)] text-sm">🔎</span>
             <input
               type="text"
               value={searchInput}
               onChange={(e) => handleSearchChange(e.target.value)}
               placeholder="기타, 캔들, 키링, 도자기..."
-              className="w-full pl-8 pr-3 py-2 text-sm rounded-xl border border-gray-200 bg-gray-50 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-black/10 focus:bg-white transition-all"
+              className="w-full pl-10 pr-9 py-2.5 text-sm rounded-full border-2 border-[var(--border)] bg-white/80 placeholder:text-[var(--subtle)] focus:outline-none focus:border-[var(--lavender)] focus:bg-white transition-all"
             />
             {searchInput && (
               <button
                 onClick={() => { setSearchInput(""); handleSearchChange(""); }}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--subtle)] hover:text-[var(--lavender-deep)] text-xs"
+                aria-label="Clear"
               >
                 ✕
               </button>
             )}
-          </div>
-          <div className="ml-auto shrink-0 flex gap-2">
-            <button
-              onClick={() => setShowRecommend(true)}
-              className="bg-black text-white text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl hover:bg-gray-800 active:scale-[0.97] transition-all"
-            >
-              🎲 <span className="hidden sm:inline">주사위 굴리기</span><span className="sm:hidden">주사위</span>
-            </button>
-            <a
-              href="/consult"
-              className="bg-pink-500 text-white text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl hover:bg-pink-600 active:scale-[0.97] transition-all"
-            >
-              💬 <span className="hidden sm:inline">큐레이터 상담</span><span className="sm:hidden">상담</span>
-            </a>
           </div>
         </div>
       </header>
@@ -148,25 +168,38 @@ export default function Home() {
 
       <FilterBar filters={filters} onChange={handleFilterChange} />
 
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-5">
-          <p className="text-sm font-medium text-gray-700">
-            {loading ? "로딩 중..." : `총 ${total.toLocaleString()}개`}
-          </p>
+      <main className="max-w-7xl mx-auto px-5 py-8">
+        <div className="flex items-end justify-between mb-7 border-b border-dotted border-[var(--border)] pb-4">
+          <div>
+            <p className="font-pixel text-[var(--ink)] text-xl sm:text-2xl leading-none">
+              CATA<span className="text-[var(--lavender-deep)]">LOGUE</span>
+            </p>
+            <p className="font-pixel text-[8px] text-[var(--lavender)] mt-2">
+              ALL ITEMS · SORTED BY LATEST
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="font-pixel text-[var(--lavender-deep)] text-xl sm:text-2xl num-tabular leading-none">
+              {loading ? "—" : total.toLocaleString()}
+            </p>
+            <p className="font-pixel text-[8px] text-[var(--lavender)] mt-2">ITEMS IN STOCK</p>
+          </div>
         </div>
 
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="bg-white rounded-xl aspect-[3/4] animate-pulse" />
+              <div key={i} className="bg-[var(--lavender-soft)] rounded-3xl aspect-[3/4] animate-pulse" />
             ))}
           </div>
         ) : products.length === 0 ? (
-          <div className="py-20 text-center text-gray-400">
-            <p className="text-4xl mb-3">{filters.q ? "🔍" : "😶"}</p>
-            <p>{filters.q ? `"${filters.q}" 검색 결과가 없어요` : "조건에 맞는 상품이 없어요"}</p>
+          <div className="py-24 text-center">
+            <p className="font-pixel text-base sm:text-lg text-[var(--lavender)] mb-3">⌧  NO RESULTS  ⌧</p>
+            <p className="font-display text-2xl text-[var(--ink)]">
+              {filters.q ? `"${filters.q}" 찾는 선물이 없어요` : "조건에 맞는 선물이 없어요"}
+            </p>
             {filters.q && (
-              <p className="text-xs mt-1">다른 키워드로 검색해보세요 (예: guitar, 향수, keychain)</p>
+              <p className="font-pixel text-[9px] mt-3 text-[var(--muted)]">TRY ANOTHER KEYWORD</p>
             )}
           </div>
         ) : (
@@ -178,23 +211,23 @@ export default function Home() {
         )}
 
         {totalPages > 1 && (
-          <div className="flex justify-center gap-2 mt-10">
+          <div className="flex justify-center items-center gap-4 mt-12">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 rounded-lg border text-sm disabled:opacity-30 hover:bg-gray-100"
+              className="px-4 py-2 rounded-full bg-white/80 border border-[var(--border)] text-sm disabled:opacity-30 hover:bg-[var(--lavender-soft)] hover:border-[var(--lavender)] transition-colors"
             >
-              이전
+              ← 이전
             </button>
-            <span className="px-4 py-2 text-sm text-gray-600">
+            <span className="text-sm text-[var(--muted)] num-tabular px-2">
               {page} / {totalPages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-4 py-2 rounded-lg border text-sm disabled:opacity-30 hover:bg-gray-100"
+              className="px-4 py-2 rounded-full bg-white/80 border border-[var(--border)] text-sm disabled:opacity-30 hover:bg-[var(--lavender-soft)] hover:border-[var(--lavender)] transition-colors"
             >
-              다음
+              다음 →
             </button>
           </div>
         )}

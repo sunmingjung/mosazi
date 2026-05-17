@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   const category = searchParams.get("category") || "";
   const priceRange = searchParams.get("price_range") || "";
   const newOnly = searchParams.get("new_only") === "1";
-  const sort = searchParams.get("sort") || "rarity";
+  const sort = searchParams.get("sort") || "first_seen";
   const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
   const pageSize = 48;
   const query = (searchParams.get("q") || "").trim();
@@ -69,14 +69,18 @@ export async function GET(request: NextRequest) {
         for (const kw of syn.keywords) {
           clauses.push("search_text LIKE ?");
           params.push(`%${kw.toLowerCase()}%`);
+          clauses.push("(',' || item_tags || ',') LIKE ?");
+          params.push(`%,${kw},%`);
         }
-        // 원래 토큰도 fallback으로 포함
         clauses.push("search_text LIKE ?");
         params.push(`%${lower}%`);
+        clauses.push("(',' || item_tags || ',') LIKE ?");
+        params.push(`%,${token},%`);
         conditions.push(`(${clauses.join(" OR ")})`);
       } else {
-        conditions.push("search_text LIKE ?");
+        conditions.push("(search_text LIKE ? OR (',' || item_tags || ',') LIKE ?)");
         params.push(`%${lower}%`);
+        params.push(`%,${token},%`);
       }
     }
   }
@@ -99,6 +103,7 @@ export async function GET(request: NextRequest) {
   const where = `WHERE ${conditions.join(" AND ")}`;
 
   const orderMap: Record<string, string> = {
+    first_seen:  "first_seen_at DESC, item_id DESC",
     rarity:      "rarity_score DESC, is_new_arrival DESC, like_count DESC NULLS LAST",
     like_count:  "like_count DESC NULLS LAST",
     review_count:"review_count DESC NULLS LAST",
@@ -109,7 +114,7 @@ export async function GET(request: NextRequest) {
   // 검색 중에는 기본 정렬을 rarity 기준으로 (like_count NULLS LAST로 외부상품 밀리지 않게)
   const defaultOrder = query
     ? "like_count DESC NULLS LAST, rarity_score DESC"
-    : orderMap.rarity;
+    : orderMap.first_seen;
   const order = orderMap[sort] ?? defaultOrder;
 
   let db;
