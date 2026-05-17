@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f7f5f0;
+  --bg: #f5f2eb;
   --surface: #ffffff;
-  --ink: #111111;
-  --muted: #6b6b66;
-  --subtle: #a8a8a3;
-  --border: #e6e3da;
+  --ink: #15140f;
+  --muted: #75726a;
+  --subtle: #b4b0a4;
+  --border: #e0dccf;
+  --hairline: #cfcabb;
 }
 
 @theme inline {
@@ -22,16 +23,45 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans), -apple-system, "SF Pro", "Helvetica Neue", Arial, sans-serif;
+  font-feature-settings: "kern", "liga", "ss01";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .font-serif {
   font-family: var(--font-serif), "Noto Serif KR", "AppleSDGothicNeo", serif;
+  font-feature-settings: "kern", "liga";
 }
 
 .tracking-display {
   letter-spacing: 0.18em;
 }
 
+.tracking-display-tight {
+  letter-spacing: -0.015em;
+}
+
+.tracking-caps {
+  letter-spacing: 0.28em;
+}
+
+.tracking-caps-wide {
+  letter-spacing: 0.32em;
+}
+
 .num-tabular {
   font-variant-numeric: tabular-nums;
+}
+
+.rule-hairline {
+  border-color: var(--hairline);
+}
+
+/* 매거진 — 페이지 진입 페이드 */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fade-up 0.5s ease-out both;
 }

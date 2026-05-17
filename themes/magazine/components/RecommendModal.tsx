@@ -107,7 +107,7 @@ export default function RecommendModal({ onClose }: Props) {
     `px-3.5 py-1.5 rounded-none text-xs border transition-colors ${
       selected
         ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--bg)]"
-        : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
+        : "rule-hairline text-[var(--muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
     }`;
 
   return (
@@ -116,14 +116,16 @@ export default function RecommendModal({ onClose }: Props) {
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[var(--ink)]/30 backdrop-blur-sm p-0 sm:p-4"
       onClick={(e) => e.target === overlayRef.current && onClose()}
     >
-      <div className="bg-[var(--bg)] w-full sm:max-w-2xl max-h-[92vh] overflow-y-auto flex flex-col border border-[var(--border)]">
-        <div className="sticky top-0 bg-[var(--bg)] z-10 px-8 pt-8 pb-5 border-b border-[var(--border)]">
-          <div className="flex items-start justify-between">
+      <div className="bg-[var(--bg)] w-full sm:max-w-2xl max-h-[92vh] overflow-y-auto flex flex-col border rule-hairline">
+        <div className="sticky top-0 bg-[var(--bg)] z-10 px-10 pt-10 pb-6 border-b rule-hairline">
+          <div className="flex items-start justify-between gap-6">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)] mb-2">
-                Track 01 · 빠르게 고르기
+              <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">
+                Track 01 <span className="text-[var(--subtle)] mx-1.5">·</span> Quick Curation
               </p>
-              <h2 className="font-serif text-2xl leading-tight">1초 만에 골라드릴게요</h2>
+              <h2 className="font-serif text-[32px] sm:text-[40px] leading-[1.05] tracking-display-tight italic">
+                1초 만에<br />골라드릴게요
+              </h2>
             </div>
             <button
               onClick={onClose}
@@ -137,7 +139,7 @@ export default function RecommendModal({ onClose }: Props) {
 
         <div className="px-8 py-7 space-y-8">
           <section>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)] mb-3">
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">
               Gender
             </p>
             <div className="flex gap-2">
@@ -148,7 +150,7 @@ export default function RecommendModal({ onClose }: Props) {
                   className={`flex-1 h-11 border text-sm transition-colors ${
                     gender === g.value
                       ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--bg)]"
-                      : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
+                      : "rule-hairline text-[var(--muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
                   }`}
                 >
                   {g.label}
@@ -159,10 +161,10 @@ export default function RecommendModal({ onClose }: Props) {
 
           <section>
             <div className="flex items-baseline justify-between mb-3">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)]">Age</p>
+              <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">Age</p>
               <p className="text-sm num-tabular">
                 <span className="text-[var(--ink)]">{age}</span>
-                <span className="text-[var(--subtle)] ml-2 text-[10px] uppercase tracking-[0.2em]">{ageLabel()}</span>
+                <span className="text-[var(--subtle)] ml-2 text-[10px] uppercase tracking-caps">{ageLabel()}</span>
               </p>
             </div>
             <input
@@ -180,7 +182,7 @@ export default function RecommendModal({ onClose }: Props) {
           </section>
 
           <section>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)] mb-3">Budget</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Budget</p>
             <div className="grid grid-cols-3 gap-2">
               {PRICE_OPTIONS.map((opt) => (
                 <button
@@ -189,7 +191,7 @@ export default function RecommendModal({ onClose }: Props) {
                   className={`py-2.5 px-3 border text-xs transition-colors ${
                     priceRange === opt.value
                       ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--bg)]"
-                      : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
+                      : "rule-hairline text-[var(--muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
                   }`}
                 >
                   {opt.label}
@@ -198,8 +200,8 @@ export default function RecommendModal({ onClose }: Props) {
             </div>
           </section>
 
-          <div className="pt-4 border-t border-[var(--border)]">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)]">
+          <div className="pt-4 border-t rule-hairline">
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">
               Optional · 채울수록 정교한 추천
               <span className="ml-2 text-[var(--ink)] num-tabular">
                 {(relationship ? 1 : 0) + (occasion ? 1 : 0) + (mood ? 1 : 0)}/3
@@ -208,7 +210,7 @@ export default function RecommendModal({ onClose }: Props) {
           </div>
 
           <section>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)] mb-3">Relationship</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Relationship</p>
             <div className="flex flex-wrap gap-2">
               {RELATIONSHIP_OPTIONS.map((opt) => (
                 <button
@@ -223,7 +225,7 @@ export default function RecommendModal({ onClose }: Props) {
           </section>
 
           <section>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)] mb-3">Occasion</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Occasion</p>
             <div className="flex flex-wrap gap-2">
               {OCCASION_OPTIONS.map((opt) => (
                 <button
@@ -238,7 +240,7 @@ export default function RecommendModal({ onClose }: Props) {
           </section>
 
           <section>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)] mb-3">Mood</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Mood</p>
             <div className="flex flex-wrap gap-2">
               {MOOD_OPTIONS.map((opt) => (
                 <button
@@ -255,7 +257,7 @@ export default function RecommendModal({ onClose }: Props) {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="w-full h-12 bg-[var(--ink)] text-[var(--bg)] text-xs uppercase tracking-[0.3em] hover:opacity-80 transition-opacity disabled:opacity-40"
+            className="w-full h-12 bg-[var(--ink)] text-[var(--bg)] text-xs uppercase tracking-caps hover:opacity-80 transition-opacity disabled:opacity-40"
           >
             {loading ? "Curating..." : "추천 받기"}
           </button>
@@ -273,8 +275,8 @@ export default function RecommendModal({ onClose }: Props) {
 
         {result && !loading && (
           <div className="px-8 pb-10">
-            <div className="flex items-baseline gap-3 mb-6 pb-3 border-b border-[var(--border)] flex-wrap">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)]">For</p>
+            <div className="flex items-baseline gap-3 mb-6 pb-3 border-b rule-hairline flex-wrap">
+              <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">For</p>
               <p className="text-sm num-tabular">
                 {result.age}, {result.gender === "F" ? "여성" : "남성"}
                 {result.priceLabel && <span className="text-[var(--muted)]"> · {result.priceLabel}</span>}
@@ -282,7 +284,7 @@ export default function RecommendModal({ onClose }: Props) {
               {result.categories.length > 0 && (
                 <div className="flex gap-2 flex-wrap ml-auto">
                   {result.categories.map((c) => (
-                    <span key={c} className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+                    <span key={c} className="text-[10px] uppercase tracking-caps text-[var(--muted)]">
                       {c}
                     </span>
                   ))}
@@ -298,7 +300,7 @@ export default function RecommendModal({ onClose }: Props) {
 
             <button
               onClick={handleSubmit}
-              className="w-full mt-8 h-11 border border-[var(--ink)] text-xs uppercase tracking-[0.3em] hover:bg-[var(--ink)] hover:text-[var(--bg)] transition-colors"
+              className="w-full mt-8 h-11 border border-[var(--ink)] text-xs uppercase tracking-caps hover:bg-[var(--ink)] hover:text-[var(--bg)] transition-colors"
             >
               다시 추천받기
             </button>

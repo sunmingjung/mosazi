@@ -60,27 +60,31 @@ export default function ConsultPage() {
 
   return (
     <div className="min-h-full flex flex-col">
-      <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg)]/85 backdrop-blur-md">
-        <div className="max-w-3xl mx-auto px-6 py-5 flex items-center justify-between">
+      <header className="sticky top-0 z-30 border-b rule-hairline bg-[var(--bg)]/90 backdrop-blur-md">
+        <div className="max-w-3xl mx-auto px-6 sm:px-10 py-6 flex items-center justify-between">
           <Link
             href="/"
-            className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
+            className="font-serif italic text-[14px] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
           >
             ← Mosazi
           </Link>
-          <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">
-            Track 02 · 직접 입력하기
+          <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">
+            Track 02 <span className="text-[var(--subtle)] mx-1.5">·</span> Bespoke
           </p>
         </div>
       </header>
 
-      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-14">
-        <div className="mb-10 max-w-2xl">
-          <h2 className="font-serif text-3xl sm:text-4xl leading-tight mb-3">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-6 sm:px-10 py-16 sm:py-20 fade-up">
+        <div className="mb-14 max-w-2xl">
+          <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-4">Editorial Service</p>
+          <h2 className="font-serif italic text-[36px] sm:text-[48px] leading-[1.05] tracking-display-tight">
             오래 고민하신 선물,
             <br />
             함께 찾아드릴게요
           </h2>
+          <p className="font-serif text-[14px] text-[var(--muted)] leading-relaxed mt-5 max-w-md not-italic">
+            받는 분과 상황을 한 문장으로 적어주세요. 카탈로그에서 가장 어울리는 세 가지를 골라드립니다.
+          </p>
         </div>
 
         <div className="mb-10">
@@ -93,14 +97,14 @@ export default function ConsultPage() {
               }}
               placeholder="예. 30대 여자친구 결혼 5주년 10만원 미니멀한 선물"
               rows={3}
-              className="w-full p-0 pr-28 py-3 text-sm bg-transparent border-0 focus:outline-none resize-none placeholder:text-[var(--subtle)]"
+              className="w-full p-0 pr-28 py-4 text-[15px] font-serif bg-transparent border-0 focus:outline-none resize-none placeholder:text-[var(--subtle)] placeholder:italic"
               disabled={loading}
               maxLength={500}
             />
             <button
               onClick={() => submit(query)}
               disabled={loading || !query.trim()}
-              className="absolute right-0 bottom-3 text-[10px] uppercase tracking-[0.3em] text-[var(--ink)] hover:opacity-60 disabled:opacity-30 transition-opacity"
+              className="absolute right-0 bottom-3 text-[10px] uppercase tracking-caps text-[var(--ink)] hover:opacity-60 disabled:opacity-30 transition-opacity"
             >
               {loading ? "Curating..." : "Submit →"}
             </button>
@@ -108,13 +112,13 @@ export default function ConsultPage() {
 
           {!result && !loading && (
             <div className="mt-6">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)] mb-3">Examples</p>
+              <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Examples</p>
               <div className="space-y-2">
                 {EXAMPLES.map((ex) => (
                   <button
                     key={ex}
                     onClick={() => { setQuery(ex); submit(ex); }}
-                    className="block w-full text-left text-xs text-[var(--muted)] hover:text-[var(--ink)] transition-colors py-1 border-b border-[var(--border)]"
+                    className="block w-full text-left text-[13px] font-serif italic text-[var(--muted)] hover:text-[var(--ink)] transition-colors py-2 border-b rule-hairline"
                   >
                     {ex}
                   </button>
@@ -129,7 +133,7 @@ export default function ConsultPage() {
             <p className="font-serif italic text-lg text-[var(--muted)]">
               큐레이터가 카탈로그를 살펴보고 있습니다…
             </p>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--subtle)] mt-3">Max 30s</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--subtle)] mt-3">Max 30s</p>
           </div>
         )}
 
@@ -142,14 +146,14 @@ export default function ConsultPage() {
         {result && result.products.length > 0 && (
           <div>
             {result.overall_note && (
-              <div className="mb-8 border-y border-[var(--border)] py-5">
-                <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)] mb-2">Editor's note</p>
+              <div className="mb-10 border-y rule-hairline py-6">
+                <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-2">Editor's note</p>
                 <p className="font-serif text-base text-[var(--ink)] leading-relaxed">
                   {result.overall_note}
                 </p>
               </div>
             )}
-            <div className="divide-y divide-[var(--border)]">
+            <div className="divide-y divide-[var(--hairline)]">
               {result.products.map((p, i) => (
                 <a
                   key={p.item_id}
@@ -158,7 +162,7 @@ export default function ConsultPage() {
                   rel="noopener noreferrer"
                   className="group flex gap-5 py-6 first:pt-0"
                 >
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-[var(--subtle)] num-tabular pt-1 w-6 shrink-0">
+                  <span className="text-[10px] uppercase tracking-caps text-[var(--subtle)] num-tabular pt-1 w-6 shrink-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {p.thumbnail_url && (
@@ -171,7 +175,7 @@ export default function ConsultPage() {
                   )}
                   <div className="flex-1 min-w-0 space-y-1.5">
                     {p.brand_name && (
-                      <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+                      <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">
                         {p.brand_name}
                       </p>
                     )}
@@ -185,7 +189,7 @@ export default function ConsultPage() {
                       “{p.reason}”
                     </p>
                     {p.shop_category && (
-                      <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--subtle)] pt-1">
+                      <p className="text-[10px] uppercase tracking-caps text-[var(--subtle)] pt-1">
                         {p.shop_category}
                       </p>
                     )}
@@ -195,7 +199,7 @@ export default function ConsultPage() {
             </div>
             <button
               onClick={() => { setResult(null); setQuery(""); }}
-              className="mt-10 w-full py-3 border border-[var(--ink)] text-xs uppercase tracking-[0.3em] hover:bg-[var(--ink)] hover:text-[var(--bg)] transition-colors"
+              className="mt-10 w-full py-3 border border-[var(--ink)] text-xs uppercase tracking-caps hover:bg-[var(--ink)] hover:text-[var(--bg)] transition-colors"
             >
               다시 찾기
             </button>

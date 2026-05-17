@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import FilterBar from "./components/FilterBar";
 import RecommendModal from "./components/RecommendModal";
@@ -102,46 +103,65 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-[var(--bg)]/85 backdrop-blur-md border-b border-[var(--border)] sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-6 pt-6 pb-3 flex items-end justify-between gap-6">
-          <div>
-            <h1 className="font-serif text-3xl sm:text-4xl tracking-display leading-none">MOSAZI</h1>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)] mt-2">
-              Curated Gifts · Independent Brands
+      <header className="bg-[var(--bg)]/90 backdrop-blur-md border-b rule-hairline sticky top-0 z-20">
+        <div className="max-w-[1400px] mx-auto px-8 sm:px-12 pt-4 pb-4 flex items-end justify-between gap-8">
+          <Link href="/" className="block group">
+            <h1 className="font-serif text-[26px] sm:text-[32px] leading-none tracking-display group-hover:opacity-70 transition-opacity">
+              MOSAZI
+            </h1>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mt-2.5">
+              Curated Gifts <span className="text-[var(--subtle)] mx-1.5">·</span> Independent Brands
             </p>
-          </div>
-          <div className="hidden sm:flex items-start gap-8 pb-1">
+          </Link>
+          <nav className="hidden sm:flex items-stretch divide-x divide-[var(--hairline)] pb-1">
             <button
               onClick={() => setShowRecommend(true)}
-              className="group text-left hover:opacity-60 transition-opacity"
+              className="group text-left px-6 first:pl-0 transition-opacity"
             >
-              <div className="flex items-center gap-1.5 text-[15px] text-[var(--ink)]">
-                <span className="text-base leading-none">🎲</span>
-                <span className="underline underline-offset-[6px] decoration-[1px]">빠르게 고르기</span>
-              </div>
-              <p className="text-[10px] text-[var(--muted)] mt-1.5 tracking-wide">선택만으로 1초 추천</p>
+              <p className="text-[9px] uppercase tracking-caps text-[var(--muted)] mb-2 group-hover:text-[var(--ink)] transition-colors">Track 01</p>
+              <p className="font-serif text-[16px] text-[var(--ink)] leading-none inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                <span>🎲</span>
+                <span className="border-b border-[var(--ink)] pb-1">빠르게 고르기</span>
+                <span className="text-[12px]">→</span>
+              </p>
+              <p className="text-[10px] text-[var(--subtle)] mt-2 tracking-wide italic font-serif">선택만으로 1초 추천</p>
             </button>
             <a
               href="/consult"
-              className="group text-left hover:opacity-60 transition-opacity"
+              className="group text-left px-6 last:pr-0 transition-opacity"
             >
-              <div className="flex items-center gap-1.5 text-[15px] text-[var(--ink)]">
-                <span className="text-base leading-none">✨</span>
-                <span className="underline underline-offset-[6px] decoration-[1px]">직접 입력하기</span>
-              </div>
-              <p className="text-[10px] text-[var(--muted)] mt-1.5 tracking-wide">맞춤형 큐레이션</p>
+              <p className="text-[9px] uppercase tracking-caps text-[var(--muted)] mb-2 group-hover:text-[var(--ink)] transition-colors">Track 02</p>
+              <p className="font-serif text-[16px] text-[var(--ink)] leading-none inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                <span>✨</span>
+                <span className="border-b border-[var(--ink)] pb-1">직접 입력하기</span>
+                <span className="text-[12px]">→</span>
+              </p>
+              <p className="text-[10px] text-[var(--subtle)] mt-2 tracking-wide italic font-serif">맞춤형 큐레이션</p>
             </a>
-          </div>
+          </nav>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 pb-4 flex items-center gap-3">
-          <div className="flex-1 max-w-xl relative">
+        <div className="max-w-[1400px] mx-auto px-8 sm:px-12 pb-5 flex items-center gap-6">
+          <div className="flex-1 max-w-md relative">
+            <svg
+              className="absolute left-0 top-1/2 -translate-y-1/2 text-[var(--muted)]"
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.2"
+              aria-hidden
+            >
+              <circle cx="7" cy="7" r="5" />
+              <line x1="10.6" y1="10.6" x2="14" y2="14" strokeLinecap="round" />
+            </svg>
             <input
               type="text"
               value={searchInput}
               onChange={(e) => handleSearchChange(e.target.value)}
-              placeholder="기타, 캔들, 키링, 도자기..."
-              className="w-full px-0 py-2 text-sm border-0 border-b border-[var(--border)] bg-transparent placeholder:text-[var(--subtle)] focus:outline-none focus:border-[var(--ink)] transition-colors"
+              placeholder="기타, 캔들, 키링, 도자기"
+              className="w-full pl-6 pr-6 py-2.5 text-[15px] font-serif border-0 border-b rule-hairline bg-transparent placeholder:text-[var(--subtle)] placeholder:italic focus:outline-none focus:border-[var(--ink)] transition-colors"
             />
             {searchInput && (
               <button
@@ -152,20 +172,18 @@ export default function Home() {
               </button>
             )}
           </div>
-          <div className="flex sm:hidden items-center gap-4 shrink-0">
+          <div className="flex sm:hidden items-center gap-5 shrink-0">
             <button
               onClick={() => setShowRecommend(true)}
-              className="flex items-center gap-1 text-[13px]"
+              className="font-serif text-[13px] underline underline-offset-[5px] decoration-[0.5px]"
             >
-              <span className="text-sm leading-none">🎲</span>
-              <span className="underline underline-offset-[5px] decoration-[1px]">빠르게 고르기</span>
+              Track 01
             </button>
             <a
               href="/consult"
-              className="flex items-center gap-1 text-[13px]"
+              className="font-serif text-[13px] underline underline-offset-[5px] decoration-[0.5px]"
             >
-              <span className="text-sm leading-none">✨</span>
-              <span className="underline underline-offset-[5px] decoration-[1px]">직접 입력하기</span>
+              Track 02
             </a>
           </div>
         </div>
@@ -175,33 +193,32 @@ export default function Home() {
 
       <FilterBar filters={filters} onChange={handleFilterChange} />
 
-      <main className="max-w-7xl mx-auto px-6 py-10">
-        <div className="flex items-baseline justify-between mb-8 border-b border-[var(--border)] pb-3">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--muted)]">
-            Catalogue
-          </p>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] num-tabular">
-            {loading ? "—" : `${total.toLocaleString()} items`}
+      <main className="max-w-[1400px] mx-auto px-8 sm:px-12 py-10 fade-up">
+        <div className="flex items-center justify-between mb-8 border-b rule-hairline pb-3">
+          <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">Catalogue</p>
+          <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] num-tabular">
+            {loading ? "—" : `${total.toLocaleString()} Items`}
           </p>
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-5 gap-y-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-14">
             {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="bg-[var(--border)]/50 aspect-[3/4] animate-pulse" />
+              <div key={i} className="bg-[var(--border)]/50 aspect-[4/5] animate-pulse" />
             ))}
           </div>
         ) : products.length === 0 ? (
-          <div className="py-24 text-center">
-            <p className="font-serif text-2xl mb-2">
+          <div className="py-32 text-center">
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-4">No Results</p>
+            <p className="font-serif text-2xl sm:text-3xl italic">
               {filters.q ? `"${filters.q}"에 해당하는 결과가 없습니다` : "조건에 맞는 상품이 없습니다"}
             </p>
             {filters.q && (
-              <p className="text-xs text-[var(--muted)]">다른 키워드를 시도해 보세요</p>
+              <p className="text-xs text-[var(--muted)] mt-4 tracking-wide">다른 키워드를 시도해 보세요</p>
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-5 gap-y-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-14">
             {products.map((p) => (
               <ProductCard key={p.item_id} product={p} />
             ))}
@@ -209,21 +226,21 @@ export default function Home() {
         )}
 
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-6 mt-16 border-t border-[var(--border)] pt-8">
+          <div className="flex justify-center items-center gap-10 mt-24 border-t rule-hairline pt-10">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="text-xs uppercase tracking-[0.2em] disabled:opacity-20 hover:opacity-60 transition-opacity"
+              className="text-[10px] uppercase tracking-caps disabled:opacity-20 hover:opacity-60 transition-opacity"
             >
-              ← Prev
+              ← Previous
             </button>
-            <span className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] num-tabular">
-              {page} / {totalPages}
+            <span className="font-serif italic text-[15px] text-[var(--muted)] num-tabular">
+              {page} <span className="text-[var(--subtle)] mx-1">of</span> {totalPages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="text-xs uppercase tracking-[0.2em] disabled:opacity-20 hover:opacity-60 transition-opacity"
+              className="text-[10px] uppercase tracking-caps disabled:opacity-20 hover:opacity-60 transition-opacity"
             >
               Next →
             </button>
