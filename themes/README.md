@@ -54,6 +54,6 @@ cp web/app/consult/page.tsx web/themes/$NEW/consult/
 | 시안 | 일자 | 특징 |
 |---|---|---|
 | `magazine` | 2026-05-17 | 모노크롬(크림+잉크), Noto Serif KR 디스플레이, 4:5 카드, uppercase tracking 라벨 |
-| `magic-girl` | 2026-05-17 | Y2K 마법소녀 — 파스텔(핑크/라벤더/민트) + 그라데이션, Single Day / Gowun Dodum, 마우스 별가루 SparkleCursor, rounded-3xl 카드, ♡✨ 데코 |
+| `pixel-pop` | 2026-05-17 | 픽셀 도트 + 파스텔(핑크/라벤더) — Press Start 2P 픽셀 폰트, Single Day / Gowun Dodum, 별가루 SparkleCursor, 픽셀 말풍선 로고, rounded-3xl 카드 |
 
-> magic-girl 은 추가 컴포넌트 `SparkleCursor.tsx` 포함. 매거진으로 복원할 땐 SparkleCursor 도 삭제 필요.
+> pixel-pop 은 추가 컴포넌트 `SparkleCursor.tsx` 포함. 매거진으로 복원할 땐 SparkleCursor 도 삭제 필요.
