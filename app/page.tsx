@@ -203,7 +203,7 @@ export default function Home() {
         ) : products.length === 0 ? (
           <div className="py-24 text-center">
             <p className="font-pixel text-base sm:text-lg text-[var(--lavender)] mb-3">⌧  NO RESULTS  ⌧</p>
-            <p className="font-display text-2xl text-[var(--ink)]">
+            <p className="font-rounded text-2xl text-[var(--ink)]">
               {filters.q ? `"${filters.q}" 찾는 선물이 없어요` : "조건에 맞는 선물이 없어요"}
             </p>
             {filters.q && (

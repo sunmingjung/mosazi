@@ -82,7 +82,7 @@ export default function ConsultPage() {
             </span>
             <span className="font-pixel text-[9px] text-[var(--lavender)]">DETAIL · BESPOKE</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl text-grad-magic leading-tight">
+          <h2 className="font-rounded text-3xl sm:text-4xl text-grad-magic leading-tight">
             오래 고민하신 선물,
             <br />
             함께 찾아드릴게요
@@ -135,7 +135,7 @@ export default function ConsultPage() {
         {loading && (
           <div className="py-16 text-center">
             <p className="font-pixel text-[10px] text-[var(--lavender)] mb-3 animate-shimmer">FINDING . . .</p>
-            <p className="font-display text-xl text-grad-magic">
+            <p className="font-rounded text-xl text-grad-magic">
               큐레이터가 살펴보고 있어요
             </p>
             <p className="font-pixel text-[8px] mt-3 text-[var(--subtle)]">MAX 30s</p>
@@ -191,7 +191,7 @@ export default function ConsultPage() {
                       <p className="text-sm font-bold text-[var(--ink)] mb-2 num-tabular">
                         {p.display_price.toLocaleString()}원
                       </p>
-                      <p className="text-[11px] text-[var(--muted)] leading-relaxed italic font-display">
+                      <p className="text-[11px] text-[var(--muted)] leading-relaxed italic font-rounded">
                         “{p.reason}”
                       </p>
                     </div>
@@ -211,7 +211,7 @@ export default function ConsultPage() {
         {result && result.products.length === 0 && (
           <div className="py-16 text-center">
             <p className="font-pixel text-[10px] text-[var(--lavender)] mb-3">NO RESULTS</p>
-            <p className="font-display text-lg text-[var(--muted)]">
+            <p className="font-rounded text-lg text-[var(--muted)]">
               {result.overall_note || "조건에 맞는 선물을 찾지 못했어요"}
             </p>
           </div>

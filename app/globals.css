@@ -45,10 +45,6 @@ body {
   background-attachment: fixed;
 }
 
-.font-display {
-  font-family: var(--font-display), "Single Day", "Gowun Dodum", serif;
-}
-
 .font-rounded {
   font-family: var(--font-rounded), "Gowun Dodum", sans-serif;
 }

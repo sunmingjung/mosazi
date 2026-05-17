@@ -126,7 +126,7 @@ export default function RecommendModal({ onClose }: Props) {
               <p className="font-pixel text-[10px] text-white/90 mb-2 -rotate-1 inline-block bg-white/15 px-2 py-1 rounded">
                 ✦ TRACK 01 · QUICK PICK
               </p>
-              <h2 className="font-display text-3xl text-white leading-tight mt-1">
+              <h2 className="font-rounded text-2xl sm:text-3xl text-white leading-tight mt-1 font-bold">
                 1초 만에 골라드릴게요
               </h2>
               <p className="font-pixel text-[8px] text-white/70 mt-2">SELECT · INSTANT · DICE</p>

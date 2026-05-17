@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import FilterBar from "./components/FilterBar";
 import RecommendModal from "./components/RecommendModal";
+import PixelBubble from "./components/PixelBubble";
 
 export interface ApiProduct {
   item_id: number;
@@ -105,10 +107,16 @@ export default function Home() {
       <header className="bg-white/70 backdrop-blur-md border-b border-[var(--border)] sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-5 pt-5 pb-3 flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-end gap-2.5">
-            <h1 className="font-pixel text-2xl sm:text-3xl text-[var(--ink)] leading-none">MOSAZI</h1>
+            <Link
+              href="/"
+              className="font-pixel text-2xl sm:text-3xl text-[var(--ink)] leading-none hover:text-[var(--lavender-deep)] transition-colors"
+            >
+              MOSAZI
+            </Link>
             <span className="text-lg sm:text-xl text-[var(--lavender-deep)] pb-0.5 leading-none select-none" aria-hidden>
               ૮ • ﻌ - ა
             </span>
+            <PixelBubble width={22} className="text-[var(--lavender-deep)] pb-0.5 self-end" />
             <div className="hidden md:flex flex-col gap-0.5 pb-1 ml-1">
               <span className="font-pixel text-[8px] text-[var(--lavender)]">CURATED · GIFTS</span>
               <span className="font-pixel text-[8px] text-[var(--subtle)]">2026 · KR</span>
@@ -195,7 +203,7 @@ export default function Home() {
         ) : products.length === 0 ? (
           <div className="py-24 text-center">
             <p className="font-pixel text-base sm:text-lg text-[var(--lavender)] mb-3">⌧  NO RESULTS  ⌧</p>
-            <p className="font-display text-2xl text-[var(--ink)]">
+            <p className="font-rounded text-2xl text-[var(--ink)]">
               {filters.q ? `"${filters.q}" 찾는 선물이 없어요` : "조건에 맞는 선물이 없어요"}
             </p>
             {filters.q && (

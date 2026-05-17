@@ -97,7 +97,7 @@ export default function ProductCard({ product: p }: Props) {
         </div>
 
         {editorialCopy && (
-          <p className="text-[11px] text-[var(--muted)] line-clamp-2 leading-snug italic font-display">
+          <p className="text-[11px] text-[var(--muted)] line-clamp-2 leading-snug italic font-rounded">
             “{editorialCopy}”
           </p>
         )}
