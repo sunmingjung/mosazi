@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
     // weighted random으로 rarity 높은 상품을 자연스럽게 우선 선발
     const pool = db
       .prepare(
-        `SELECT ${COLS} FROM products
+        `SELECT ${COLS} FROM items
          WHERE is_sold_out = 0
            AND thumbnail_url IS NOT NULL
            AND display_price > 0
@@ -124,7 +124,7 @@ export async function GET(request: NextRequest) {
 
     const extras = db
       .prepare(
-        `SELECT ${COLS} FROM products
+        `SELECT ${COLS} FROM items
          WHERE rarity_score > 0
            AND is_sold_out = 0
            AND thumbnail_url IS NOT NULL
