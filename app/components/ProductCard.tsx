@@ -47,10 +47,9 @@ export default function ProductCard({ product: p }: Props) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group block bg-white rounded-3xl overflow-hidden transition-all hover:-translate-y-1"
-      style={{ boxShadow: "0 4px 16px -6px rgba(155, 134, 224, 0.25), 0 2px 6px -2px rgba(167, 150, 255, 0.15)" }}
+      className="group block"
     >
-      <div className="relative aspect-square bg-[var(--lavender-soft)] overflow-hidden">
+      <div className="relative aspect-[4/5] bg-[var(--border)]/40 overflow-hidden mb-5">
         {p.thumbnail_url ? (
           <Image
             src={p.thumbnail_url}
@@ -58,35 +57,35 @@ export default function ProductCard({ product: p }: Props) {
             fill
             unoptimized
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover group-hover:scale-[1.06] transition-transform duration-500 ease-out"
+            className="object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-[var(--subtle)] font-pixel text-[10px]">
-            NO IMAGE
+          <div className="w-full h-full flex items-center justify-center text-[var(--subtle)] text-[10px] uppercase tracking-caps">
+            No Image
           </div>
         )}
         {isNew && (
-          <span className="absolute top-2.5 left-2.5 font-pixel text-[8px] bg-grad-strawberry text-white px-2 py-1 rounded -rotate-3" style={{ boxShadow: "0 3px 8px -2px rgba(255, 90, 154, 0.45)" }}>
-            ★ NEW
+          <span className="absolute top-3 left-3 text-[9px] uppercase tracking-caps bg-[var(--ink)] text-[var(--bg)] px-2 py-1">
+            New
           </span>
         )}
         {p.sale_rate && p.sale_rate > 0 ? (
-          <span className="absolute top-2.5 right-2.5 font-pixel text-[8px] bg-white/95 backdrop-blur text-[var(--pink-deep)] px-2 py-1 rounded num-tabular rotate-3 border border-[var(--pink)]">
-            -{p.sale_rate}%
+          <span className="absolute top-3 right-3 text-[10px] uppercase tracking-caps text-[var(--ink)] num-tabular">
+            −{p.sale_rate}%
           </span>
         ) : null}
       </div>
 
-      <div className="p-3.5 space-y-1.5">
-        <p className="font-pixel text-[8px] text-[var(--lavender)] truncate">
+      <div className="space-y-2">
+        <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] truncate">
           {brandLabel}
         </p>
-        <p className="text-[13px] leading-snug text-[var(--ink)] line-clamp-2 min-h-[2.4em]">
+        <p className="font-serif text-[14px] leading-[1.45] text-[var(--ink)] line-clamp-2 min-h-[2.9em]">
           {p.item_name}
         </p>
 
-        <div className="flex items-baseline gap-2 pt-1 num-tabular">
-          <span className="text-sm font-bold text-[var(--ink)]">
+        <div className="flex items-baseline gap-2 pt-1.5 num-tabular">
+          <span className="text-[13px] text-[var(--ink)] tracking-tight">
             {formatPrice(p.display_price, p.currency)}
           </span>
           {p.original_price && p.original_price !== p.display_price && (
@@ -97,19 +96,23 @@ export default function ProductCard({ product: p }: Props) {
         </div>
 
         {editorialCopy && (
-          <p className="text-[11px] text-[var(--muted)] line-clamp-2 leading-snug italic font-rounded">
+          <p className="font-serif italic text-[12px] text-[var(--muted)] line-clamp-2 leading-[1.5] pt-1.5">
             “{editorialCopy}”
           </p>
         )}
 
-        <div className="flex items-center gap-3 pt-1 font-pixel text-[8px] text-[var(--subtle)] num-tabular">
-          {p.like_count != null && p.like_count > 0 && (
-            <span>♥ {p.like_count.toLocaleString()}</span>
-          )}
-          {p.review_count != null && p.review_count > 0 && (
-            <span>★ {p.review_score} / {p.review_count}</span>
-          )}
-        </div>
+        {(p.like_count || p.review_count) ? (
+          <div className="flex items-center gap-4 pt-1.5 text-[9px] uppercase tracking-caps text-[var(--subtle)] num-tabular">
+            {p.like_count != null && p.like_count > 0 && (
+              <span>{p.like_count.toLocaleString()} <span className="text-[var(--subtle)]/70">likes</span></span>
+            )}
+            {p.review_count != null && p.review_count > 0 && (
+              <span>
+                {p.review_score} <span className="text-[var(--subtle)]/70">·</span> {p.review_count}
+              </span>
+            )}
+          </div>
+        ) : null}
       </div>
     </a>
   );

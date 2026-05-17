@@ -17,47 +17,47 @@ interface Props {
 }
 
 const GENDER_OPTIONS = [
-  { value: "F", label: "여성", emoji: "👩" },
-  { value: "M", label: "남성", emoji: "👨" },
+  { value: "F", label: "여성" },
+  { value: "M", label: "남성" },
 ];
 
 const PRICE_OPTIONS = [
-  { value: "", label: "전체", emoji: "🌈" },
-  { value: "0-30000", label: "~3만원", emoji: "🌷" },
-  { value: "30000-50000", label: "3~5만원", emoji: "🌸" },
-  { value: "50000-100000", label: "5~10만원", emoji: "💝" },
-  { value: "100000-200000", label: "10~20만원", emoji: "💎" },
-  { value: "200000+", label: "20만원+", emoji: "👑" },
+  { value: "", label: "전체" },
+  { value: "0-30000", label: "~3만원" },
+  { value: "30000-50000", label: "3~5만원" },
+  { value: "50000-100000", label: "5~10만원" },
+  { value: "100000-200000", label: "10~20만원" },
+  { value: "200000+", label: "20만원+" },
 ];
 
 const OCCASION_OPTIONS = [
-  { value: "birthday",     emoji: "🎂", label: "생일" },
-  { value: "wedding",      emoji: "💍", label: "결혼" },
-  { value: "housewarming", emoji: "🏠", label: "집들이" },
-  { value: "promotion",    emoji: "🎉", label: "승진/취업" },
-  { value: "graduation",   emoji: "🎓", label: "졸업/입학" },
-  { value: "holiday",      emoji: "🌙", label: "명절" },
-  { value: "thank",        emoji: "💌", label: "답례" },
+  { value: "birthday",     label: "생일" },
+  { value: "wedding",      label: "결혼" },
+  { value: "housewarming", label: "집들이" },
+  { value: "promotion",    label: "승진·취업" },
+  { value: "graduation",   label: "졸업·입학" },
+  { value: "holiday",      label: "명절" },
+  { value: "thank",        label: "답례" },
 ];
 
 const MOOD_OPTIONS = [
-  { value: "cute",    emoji: "🧸", label: "귀여움" },
-  { value: "chic",    emoji: "🖤", label: "시크" },
-  { value: "unique",  emoji: "🦄", label: "유니크" },
-  { value: "natural", emoji: "🌿", label: "내추럴" },
-  { value: "warm",    emoji: "☕", label: "따뜻함" },
-  { value: "vintage", emoji: "🌸", label: "빈티지" },
+  { value: "cute",    label: "귀여움" },
+  { value: "chic",    label: "시크·모던" },
+  { value: "unique",  label: "유니크" },
+  { value: "natural", label: "내추럴" },
+  { value: "warm",    label: "따뜻함" },
+  { value: "vintage", label: "빈티지" },
 ];
 
 const RELATIONSHIP_OPTIONS = [
-  { value: "self",      emoji: "✨", label: "본인" },
-  { value: "parent",    emoji: "👨‍👩‍👧", label: "부모님" },
-  { value: "partner",   emoji: "💕", label: "연인" },
-  { value: "friend",    emoji: "🧑‍🤝‍🧑", label: "친구" },
-  { value: "colleague", emoji: "💼", label: "동료" },
-  { value: "boss",      emoji: "🤝", label: "상사" },
-  { value: "child",     emoji: "👶", label: "조카/아이" },
-  { value: "sibling",   emoji: "👫", label: "형제자매" },
+  { value: "self",      label: "본인" },
+  { value: "parent",    label: "부모님" },
+  { value: "partner",   label: "연인" },
+  { value: "friend",    label: "친구" },
+  { value: "colleague", label: "동료" },
+  { value: "boss",      label: "상사" },
+  { value: "child",     label: "조카·아이" },
+  { value: "sibling",   label: "형제자매" },
 ];
 
 function pickOne(current: string, v: string): string {
@@ -96,44 +96,40 @@ export default function RecommendModal({ onClose }: Props) {
   }
 
   const ageLabel = () => {
-    if (age < 20) return "10대";
-    if (age < 30) return "20대";
-    if (age < 40) return "30대";
-    if (age < 55) return "40대";
-    return "50대+";
+    if (age < 20) return "10s";
+    if (age < 30) return "20s";
+    if (age < 40) return "30s";
+    if (age < 55) return "40s";
+    return "50s+";
   };
 
   const chipCls = (selected: boolean) =>
-    `px-3.5 py-1.5 rounded-full text-xs font-rounded transition-all ${
+    `px-3.5 py-1.5 rounded-none text-xs border transition-colors ${
       selected
-        ? "bg-grad-strawberry text-white shadow-sm scale-[1.03]"
-        : "bg-white text-[var(--muted)] border border-[var(--border)] hover:border-[var(--pink)] hover:text-[var(--pink-deep)]"
+        ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--bg)]"
+        : "rule-hairline text-[var(--muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
     }`;
 
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[var(--ink)]/35 backdrop-blur-md p-0 sm:p-4"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[var(--ink)]/30 backdrop-blur-sm p-0 sm:p-4"
       onClick={(e) => e.target === overlayRef.current && onClose()}
     >
-      <div
-        className="bg-[var(--bg)] w-full sm:max-w-2xl sm:rounded-3xl rounded-t-3xl max-h-[92vh] overflow-y-auto flex flex-col"
-        style={{ boxShadow: "0 24px 64px -12px rgba(255, 90, 154, 0.35)" }}
-      >
-        <div className="sticky top-0 bg-grad-magic z-10 px-7 pt-7 pb-5">
-          <div className="flex items-start justify-between">
+      <div className="bg-[var(--bg)] w-full sm:max-w-2xl max-h-[92vh] overflow-y-auto flex flex-col border rule-hairline">
+        <div className="sticky top-0 bg-[var(--bg)] z-10 px-10 pt-10 pb-6 border-b rule-hairline">
+          <div className="flex items-start justify-between gap-6">
             <div>
-              <p className="font-pixel text-[10px] text-white/90 mb-2 -rotate-1 inline-block bg-white/15 px-2 py-1 rounded">
-                ✦ TRACK 01 · QUICK PICK
+              <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">
+                Track 01 <span className="text-[var(--subtle)] mx-1.5">·</span> Quick Curation
               </p>
-              <h2 className="font-rounded text-2xl sm:text-3xl text-white leading-tight mt-1 font-bold">
-                1초 만에 골라드릴게요
+              <h2 className="font-serif text-[32px] sm:text-[40px] leading-[1.05] tracking-display-tight italic">
+                1초 만에<br />골라드릴게요
               </h2>
-              <p className="font-pixel text-[8px] text-white/70 mt-2">SELECT · INSTANT · DICE</p>
             </div>
             <button
               onClick={onClose}
-              className="text-white/80 hover:text-white text-xl w-9 h-9 rounded-full hover:bg-white/20 flex items-center justify-center"
+              className="text-[var(--muted)] hover:text-[var(--ink)] text-xl leading-none w-8 h-8 flex items-center justify-center"
               aria-label="Close"
             >
               ✕
@@ -141,32 +137,34 @@ export default function RecommendModal({ onClose }: Props) {
           </div>
         </div>
 
-        <div className="px-7 py-6 space-y-6">
+        <div className="px-8 py-7 space-y-8">
           <section>
-            <p className="font-pixel text-[9px] text-[var(--lavender)] mb-2.5">RECIPIENT</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">
+              Gender
+            </p>
             <div className="flex gap-2">
               {GENDER_OPTIONS.map((g) => (
                 <button
                   key={g.value}
                   onClick={() => setGender(g.value as "F" | "M")}
-                  className={`flex-1 h-12 rounded-2xl text-sm font-rounded transition-all ${
+                  className={`flex-1 h-11 border text-sm transition-colors ${
                     gender === g.value
-                      ? "bg-grad-strawberry text-white shadow-sm scale-[1.02]"
-                      : "bg-white border-2 border-[var(--border)] text-[var(--muted)] hover:border-[var(--pink)]"
+                      ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--bg)]"
+                      : "rule-hairline text-[var(--muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
                   }`}
                 >
-                  {g.emoji} {g.label}
+                  {g.label}
                 </button>
               ))}
             </div>
           </section>
 
           <section>
-            <div className="flex items-baseline justify-between mb-2.5">
-              <p className="font-pixel text-[9px] text-[var(--lavender)]">AGE</p>
-              <p className="num-tabular">
-                <span className="text-grad-strawberry font-bold text-base">{age}</span>
-                <span className="font-pixel text-[var(--subtle)] ml-2 text-[8px]">{ageLabel()}</span>
+            <div className="flex items-baseline justify-between mb-3">
+              <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">Age</p>
+              <p className="text-sm num-tabular">
+                <span className="text-[var(--ink)]">{age}</span>
+                <span className="text-[var(--subtle)] ml-2 text-[10px] uppercase tracking-caps">{ageLabel()}</span>
               </p>
             </div>
             <input
@@ -176,42 +174,43 @@ export default function RecommendModal({ onClose }: Props) {
               step={1}
               value={age}
               onChange={(e) => setAge(Number(e.target.value))}
-              className="w-full accent-[var(--pink-deep)]"
+              className="w-full accent-[var(--ink)]"
             />
+            <div className="flex justify-between text-[10px] text-[var(--subtle)] mt-1 num-tabular">
+              <span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>70</span>
+            </div>
           </section>
 
           <section>
-            <p className="font-pixel text-[9px] text-[var(--lavender)] mb-2.5">BUDGET</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Budget</p>
             <div className="grid grid-cols-3 gap-2">
               {PRICE_OPTIONS.map((opt) => (
                 <button
                   key={opt.value}
                   onClick={() => setPriceRange(opt.value)}
-                  className={`py-2.5 px-3 rounded-2xl text-xs font-rounded transition-all ${
+                  className={`py-2.5 px-3 border text-xs transition-colors ${
                     priceRange === opt.value
-                      ? "bg-grad-strawberry text-white shadow-sm scale-[1.02]"
-                      : "bg-white border-2 border-[var(--border)] text-[var(--muted)] hover:border-[var(--pink)]"
+                      ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--bg)]"
+                      : "rule-hairline text-[var(--muted)] hover:border-[var(--ink)] hover:text-[var(--ink)]"
                   }`}
                 >
-                  <span className="mr-1">{opt.emoji}</span>
                   {opt.label}
                 </button>
               ))}
             </div>
           </section>
 
-          <div className="pt-3 border-t-2 border-dotted border-[var(--border)]">
-            <p className="font-pixel text-[9px] text-[var(--muted)]">
-              OPTIONAL · 채울수록 정교한 추천 [
-              {["●","●","●"].map((d, i) => (
-                <span key={i} className={i < ((relationship?1:0)+(occasion?1:0)+(mood?1:0)) ? "text-[var(--pink-deep)]" : "text-[var(--border)]"}>{d}</span>
-              ))}
-              ]
+          <div className="pt-4 border-t rule-hairline">
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">
+              Optional · 채울수록 정교한 추천
+              <span className="ml-2 text-[var(--ink)] num-tabular">
+                {(relationship ? 1 : 0) + (occasion ? 1 : 0) + (mood ? 1 : 0)}/3
+              </span>
             </p>
           </div>
 
           <section>
-            <p className="font-pixel text-[9px] text-[var(--lavender)] mb-2.5">RELATIONSHIP</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Relationship</p>
             <div className="flex flex-wrap gap-2">
               {RELATIONSHIP_OPTIONS.map((opt) => (
                 <button
@@ -219,14 +218,14 @@ export default function RecommendModal({ onClose }: Props) {
                   onClick={() => setRelationship(pickOne(relationship, opt.value))}
                   className={chipCls(relationship === opt.value)}
                 >
-                  {opt.emoji} {opt.label}
+                  {opt.label}
                 </button>
               ))}
             </div>
           </section>
 
           <section>
-            <p className="font-pixel text-[9px] text-[var(--lavender)] mb-2.5">OCCASION</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Occasion</p>
             <div className="flex flex-wrap gap-2">
               {OCCASION_OPTIONS.map((opt) => (
                 <button
@@ -234,14 +233,14 @@ export default function RecommendModal({ onClose }: Props) {
                   onClick={() => setOccasion(pickOne(occasion, opt.value))}
                   className={chipCls(occasion === opt.value)}
                 >
-                  {opt.emoji} {opt.label}
+                  {opt.label}
                 </button>
               ))}
             </div>
           </section>
 
           <section>
-            <p className="font-pixel text-[9px] text-[var(--lavender)] mb-2.5">MOOD</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Mood</p>
             <div className="flex flex-wrap gap-2">
               {MOOD_OPTIONS.map((opt) => (
                 <button
@@ -249,7 +248,7 @@ export default function RecommendModal({ onClose }: Props) {
                   onClick={() => setMood(pickOne(mood, opt.value))}
                   className={chipCls(mood === opt.value)}
                 >
-                  {opt.emoji} {opt.label}
+                  {opt.label}
                 </button>
               ))}
             </div>
@@ -258,45 +257,42 @@ export default function RecommendModal({ onClose }: Props) {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="w-full h-13 bg-grad-strawberry text-white font-rounded font-bold text-base py-3.5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-transform disabled:opacity-50"
-            style={{ boxShadow: "0 6px 20px -6px rgba(255, 90, 154, 0.5)" }}
+            className="w-full h-12 bg-[var(--ink)] text-[var(--bg)] text-xs uppercase tracking-caps hover:opacity-80 transition-opacity disabled:opacity-40"
           >
-            {loading ? "FINDING..." : "감도 높은 선물 추천받기"}
+            {loading ? "Curating..." : "추천 받기"}
           </button>
         </div>
 
         {loading && (
-          <div className="px-7 pb-7">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="px-8 pb-8">
+            <div className="grid grid-cols-2 gap-x-5 gap-y-8">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="bg-[var(--pink-soft)] rounded-3xl aspect-[3/4] animate-pulse" />
+                <div key={i} className="bg-[var(--border)]/40 aspect-[4/5] animate-pulse" />
               ))}
             </div>
           </div>
         )}
 
         {result && !loading && (
-          <div className="px-7 pb-8">
-            <div className="flex items-baseline gap-2 mb-5 pb-3 border-b border-dotted border-[var(--border)] flex-wrap">
-              <p className="font-pixel text-[9px] text-[var(--lavender)]">FOR</p>
-              <span className="text-sm text-[var(--muted)]">
-                <span className="font-bold text-grad-strawberry text-base">
-                  {result.age} · {result.gender === "F" ? "여성" : "남성"}
-                </span>
-                {result.priceLabel && (
-                  <span className="ml-1 font-semibold text-[var(--ink)]">· {result.priceLabel}</span>
-                )}
-              </span>
-              <div className="flex gap-1.5 flex-wrap ml-auto">
-                {result.categories.map((c) => (
-                  <span key={c} className="font-pixel text-[8px] bg-[var(--lavender-soft)] text-[var(--lavender)] px-2 py-1 rounded">
-                    {c}
-                  </span>
-                ))}
-              </div>
+          <div className="px-8 pb-10">
+            <div className="flex items-baseline gap-3 mb-6 pb-3 border-b rule-hairline flex-wrap">
+              <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">For</p>
+              <p className="text-sm num-tabular">
+                {result.age}, {result.gender === "F" ? "여성" : "남성"}
+                {result.priceLabel && <span className="text-[var(--muted)]"> · {result.priceLabel}</span>}
+              </p>
+              {result.categories.length > 0 && (
+                <div className="flex gap-2 flex-wrap ml-auto">
+                  {result.categories.map((c) => (
+                    <span key={c} className="text-[10px] uppercase tracking-caps text-[var(--muted)]">
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-x-5 gap-y-10">
               {result.products.map((p) => (
                 <ProductCard key={p.item_id} product={p} />
               ))}
@@ -304,7 +300,7 @@ export default function RecommendModal({ onClose }: Props) {
 
             <button
               onClick={handleSubmit}
-              className="w-full mt-6 py-3 rounded-full bg-white border-2 border-[var(--pink)] text-[var(--pink-deep)] font-rounded font-semibold text-sm hover:bg-[var(--pink-soft)] transition-colors"
+              className="w-full mt-8 h-11 border border-[var(--ink)] text-xs uppercase tracking-caps hover:bg-[var(--ink)] hover:text-[var(--bg)] transition-colors"
             >
               다시 추천받기
             </button>

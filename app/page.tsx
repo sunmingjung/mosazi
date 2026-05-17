@@ -5,7 +5,6 @@ import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import FilterBar from "./components/FilterBar";
 import RecommendModal from "./components/RecommendModal";
-import PixelBubble from "./components/PixelBubble";
 
 export interface ApiProduct {
   item_id: number;
@@ -104,70 +103,88 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-white/70 backdrop-blur-md border-b border-[var(--border)] sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-5 pt-5 pb-3 flex items-center justify-between gap-4 flex-wrap">
-          <div className="flex items-end gap-2.5">
-            <Link
-              href="/"
-              className="font-pixel text-2xl sm:text-3xl text-[var(--ink)] leading-none hover:text-[var(--lavender-deep)] transition-colors"
-            >
+      <header className="bg-[var(--bg)]/90 backdrop-blur-md border-b rule-hairline sticky top-0 z-20">
+        <div className="max-w-[1400px] mx-auto px-8 sm:px-12 pt-4 pb-4 flex items-end justify-between gap-8">
+          <Link href="/" className="block group">
+            <h1 className="font-serif text-[26px] sm:text-[32px] leading-none tracking-display group-hover:opacity-70 transition-opacity">
               MOSAZI
-            </Link>
-            <span className="text-lg sm:text-xl text-[var(--lavender-deep)] pb-0.5 leading-none select-none" aria-hidden>
-              ૮ • ﻌ - ა
-            </span>
-            <PixelBubble width={22} className="text-[var(--lavender-deep)] pb-0.5 self-end" />
-            <div className="hidden md:flex flex-col gap-0.5 pb-1 ml-1">
-              <span className="font-pixel text-[8px] text-[var(--lavender)]">CURATED · GIFTS</span>
-              <span className="font-pixel text-[8px] text-[var(--subtle)]">2026 · KR</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2.5">
-            {/* 빠르게 고르기 — 클로우 카드 */}
+            </h1>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mt-2.5">
+              Curated Gifts <span className="text-[var(--subtle)] mx-1.5">·</span> Independent Brands
+            </p>
+          </Link>
+          <nav className="hidden sm:flex items-stretch divide-x divide-[var(--hairline)] pb-1">
             <button
               onClick={() => setShowRecommend(true)}
-              className="clow-card relative bg-grad-magic text-white text-[13px] font-semibold px-5 py-2.5 rounded-lg border-2 border-white/70"
-              style={{ boxShadow: "0 4px 14px -4px rgba(155, 134, 224, 0.55), inset 0 0 0 1px rgba(255,255,255,0.45)" }}
+              className="group text-left px-6 first:pl-0 transition-opacity"
             >
-              <span className="clow-twinkle absolute top-1 right-1.5 text-[10px] text-white">✦</span>
-              <span className="clow-twinkle delay absolute bottom-1 left-1.5 text-[9px] text-white">✧</span>
-              <span className="relative z-10 flex items-center gap-1.5">
-                <span className="text-base">🎲</span>
-                <span>빠르게 고르기</span>
-              </span>
+              <p className="text-[9px] uppercase tracking-caps text-[var(--muted)] mb-2 group-hover:text-[var(--ink)] transition-colors">Track 01</p>
+              <p className="font-serif text-[16px] text-[var(--ink)] leading-none inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                <span>🎲</span>
+                <span className="border-b border-[var(--ink)] pb-1">빠르게 고르기</span>
+                <span className="text-[12px]">→</span>
+              </p>
+              <p className="text-[10px] text-[var(--subtle)] mt-2 tracking-wide italic font-serif">선택만으로 1초 추천</p>
             </button>
-
-            {/* 직접 입력하기 — 라벤더 톤 */}
             <a
               href="/consult"
-              className="flex items-center gap-1.5 text-[13px] font-semibold text-[var(--lavender-deep)] bg-[var(--lavender-soft)] border border-[var(--lavender)]/50 px-4 py-2.5 rounded-lg hover:bg-white transition-colors"
+              className="group text-left px-6 last:pr-0 transition-opacity"
             >
-              <span className="text-base">✨</span>
-              <span>직접 입력하기</span>
+              <p className="text-[9px] uppercase tracking-caps text-[var(--muted)] mb-2 group-hover:text-[var(--ink)] transition-colors">Track 02</p>
+              <p className="font-serif text-[16px] text-[var(--ink)] leading-none inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                <span>✨</span>
+                <span className="border-b border-[var(--ink)] pb-1">직접 입력하기</span>
+                <span className="text-[12px]">→</span>
+              </p>
+              <p className="text-[10px] text-[var(--subtle)] mt-2 tracking-wide italic font-serif">맞춤형 큐레이션</p>
             </a>
-          </div>
+          </nav>
         </div>
 
-        <div className="max-w-7xl mx-auto px-5 pb-4 flex items-center gap-3">
-          <div className="flex-1 max-w-xl relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--lavender)] text-sm">🔎</span>
+        <div className="max-w-[1400px] mx-auto px-8 sm:px-12 pb-5 flex items-center gap-6">
+          <div className="flex-1 max-w-md relative">
+            <svg
+              className="absolute left-0 top-1/2 -translate-y-1/2 text-[var(--muted)]"
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.2"
+              aria-hidden
+            >
+              <circle cx="7" cy="7" r="5" />
+              <line x1="10.6" y1="10.6" x2="14" y2="14" strokeLinecap="round" />
+            </svg>
             <input
               type="text"
               value={searchInput}
               onChange={(e) => handleSearchChange(e.target.value)}
-              placeholder="기타, 캔들, 키링, 도자기..."
-              className="w-full pl-10 pr-9 py-2.5 text-sm rounded-full border-2 border-[var(--border)] bg-white/80 placeholder:text-[var(--subtle)] focus:outline-none focus:border-[var(--lavender)] focus:bg-white transition-all"
+              placeholder="기타, 캔들, 키링, 도자기"
+              className="w-full pl-6 pr-6 py-2.5 text-[15px] font-serif border-0 border-b rule-hairline bg-transparent placeholder:text-[var(--subtle)] placeholder:italic focus:outline-none focus:border-[var(--ink)] transition-colors"
             />
             {searchInput && (
               <button
                 onClick={() => { setSearchInput(""); handleSearchChange(""); }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--subtle)] hover:text-[var(--lavender-deep)] text-xs"
-                aria-label="Clear"
+                className="absolute right-0 top-1/2 -translate-y-1/2 text-[var(--subtle)] hover:text-[var(--ink)] text-xs"
               >
                 ✕
               </button>
             )}
+          </div>
+          <div className="flex sm:hidden items-center gap-5 shrink-0">
+            <button
+              onClick={() => setShowRecommend(true)}
+              className="font-serif text-[13px] underline underline-offset-[5px] decoration-[0.5px]"
+            >
+              Track 01
+            </button>
+            <a
+              href="/consult"
+              className="font-serif text-[13px] underline underline-offset-[5px] decoration-[0.5px]"
+            >
+              Track 02
+            </a>
           </div>
         </div>
       </header>
@@ -176,42 +193,32 @@ export default function Home() {
 
       <FilterBar filters={filters} onChange={handleFilterChange} />
 
-      <main className="max-w-7xl mx-auto px-5 py-8">
-        <div className="flex items-end justify-between mb-7 border-b border-dotted border-[var(--border)] pb-4">
-          <div>
-            <p className="font-pixel text-[var(--ink)] text-xl sm:text-2xl leading-none">
-              CATA<span className="text-[var(--lavender-deep)]">LOGUE</span>
-            </p>
-            <p className="font-pixel text-[8px] text-[var(--lavender)] mt-2">
-              ALL ITEMS · SORTED BY LATEST
-            </p>
-          </div>
-          <div className="text-right">
-            <p className="font-pixel text-[var(--lavender-deep)] text-xl sm:text-2xl num-tabular leading-none">
-              {loading ? "—" : total.toLocaleString()}
-            </p>
-            <p className="font-pixel text-[8px] text-[var(--lavender)] mt-2">ITEMS IN STOCK</p>
-          </div>
+      <main className="max-w-[1400px] mx-auto px-8 sm:px-12 py-10 fade-up">
+        <div className="flex items-center justify-between mb-8 border-b rule-hairline pb-3">
+          <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">Catalogue</p>
+          <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] num-tabular">
+            {loading ? "—" : `${total.toLocaleString()} Items`}
+          </p>
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-14">
             {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="bg-[var(--lavender-soft)] rounded-3xl aspect-[3/4] animate-pulse" />
+              <div key={i} className="bg-[var(--border)]/50 aspect-[4/5] animate-pulse" />
             ))}
           </div>
         ) : products.length === 0 ? (
-          <div className="py-24 text-center">
-            <p className="font-pixel text-base sm:text-lg text-[var(--lavender)] mb-3">⌧  NO RESULTS  ⌧</p>
-            <p className="font-rounded text-2xl text-[var(--ink)]">
-              {filters.q ? `"${filters.q}" 찾는 선물이 없어요` : "조건에 맞는 선물이 없어요"}
+          <div className="py-32 text-center">
+            <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-4">No Results</p>
+            <p className="font-serif text-2xl sm:text-3xl italic">
+              {filters.q ? `"${filters.q}"에 해당하는 결과가 없습니다` : "조건에 맞는 상품이 없습니다"}
             </p>
             {filters.q && (
-              <p className="font-pixel text-[9px] mt-3 text-[var(--muted)]">TRY ANOTHER KEYWORD</p>
+              <p className="text-xs text-[var(--muted)] mt-4 tracking-wide">다른 키워드를 시도해 보세요</p>
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-14">
             {products.map((p) => (
               <ProductCard key={p.item_id} product={p} />
             ))}
@@ -219,23 +226,23 @@ export default function Home() {
         )}
 
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-12">
+          <div className="flex justify-center items-center gap-10 mt-24 border-t rule-hairline pt-10">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 rounded-full bg-white/80 border border-[var(--border)] text-sm disabled:opacity-30 hover:bg-[var(--lavender-soft)] hover:border-[var(--lavender)] transition-colors"
+              className="text-[10px] uppercase tracking-caps disabled:opacity-20 hover:opacity-60 transition-opacity"
             >
-              ← 이전
+              ← Previous
             </button>
-            <span className="text-sm text-[var(--muted)] num-tabular px-2">
-              {page} / {totalPages}
+            <span className="font-serif italic text-[15px] text-[var(--muted)] num-tabular">
+              {page} <span className="text-[var(--subtle)] mx-1">of</span> {totalPages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-4 py-2 rounded-full bg-white/80 border border-[var(--border)] text-sm disabled:opacity-30 hover:bg-[var(--lavender-soft)] hover:border-[var(--lavender)] transition-colors"
+              className="text-[10px] uppercase tracking-caps disabled:opacity-20 hover:opacity-60 transition-opacity"
             >
-              다음 →
+              Next →
             </button>
           </div>
         )}

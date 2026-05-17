@@ -60,69 +60,65 @@ export default function ConsultPage() {
 
   return (
     <div className="min-h-full flex flex-col">
-      <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-white/70 backdrop-blur-md">
-        <div className="max-w-3xl mx-auto px-5 py-4 flex items-center justify-between gap-3">
+      <header className="sticky top-0 z-30 border-b rule-hairline bg-[var(--bg)]/90 backdrop-blur-md">
+        <div className="max-w-3xl mx-auto px-6 sm:px-10 py-6 flex items-center justify-between">
           <Link
             href="/"
-            className="text-sm text-[var(--muted)] hover:text-[var(--lavender-deep)] font-rounded transition-colors"
+            className="font-serif italic text-[14px] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
           >
             ← Mosazi
           </Link>
-          <p className="font-pixel text-[9px] text-[var(--lavender)]">
-            ✦ MOSAZI ૮ • ﻌ - ა
+          <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">
+            Track 02 <span className="text-[var(--subtle)] mx-1.5">·</span> Bespoke
           </p>
         </div>
       </header>
 
-      <main className="flex-1 max-w-3xl w-full mx-auto px-5 py-10">
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 mb-3">
-            <span className="font-pixel text-[10px] text-white bg-grad-magic px-2.5 py-1 rounded -rotate-1">
-              ✦ TRACK 02
-            </span>
-            <span className="font-pixel text-[9px] text-[var(--lavender)]">DETAIL · BESPOKE</span>
-          </div>
-          <h2 className="font-rounded text-3xl sm:text-4xl text-grad-magic leading-tight">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-6 sm:px-10 py-16 sm:py-20 fade-up">
+        <div className="mb-14 max-w-2xl">
+          <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-4">Editorial Service</p>
+          <h2 className="font-serif italic text-[36px] sm:text-[48px] leading-[1.05] tracking-display-tight">
             오래 고민하신 선물,
             <br />
             함께 찾아드릴게요
-            <span className="text-[var(--lavender-deep)] ml-2 text-2xl select-none" aria-hidden>૮₍´˶• . • ⑅ ₎ა</span>
           </h2>
+          <p className="font-serif text-[14px] text-[var(--muted)] leading-relaxed mt-5 max-w-md not-italic">
+            받는 분과 상황을 한 문장으로 적어주세요. 카탈로그에서 가장 어울리는 세 가지를 골라드립니다.
+          </p>
         </div>
 
-        <div className="mb-8">
-          <div className="relative bg-white rounded-3xl border-2 border-[var(--border)] focus-within:border-[var(--lavender)] transition-colors p-1" style={{ boxShadow: "0 4px 20px -6px rgba(155, 134, 224, 0.25)" }}>
+        <div className="mb-10">
+          <div className="relative border-b border-[var(--ink)] focus-within:border-[var(--ink)]">
             <textarea
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) submit(query);
               }}
-              placeholder="예) 30대 여자친구 결혼 5주년 10만원 미니멀한 선물"
+              placeholder="예. 30대 여자친구 결혼 5주년 10만원 미니멀한 선물"
               rows={3}
-              className="w-full p-4 pr-28 text-sm bg-transparent border-0 focus:outline-none resize-none placeholder:text-[var(--subtle)] font-rounded"
+              className="w-full p-0 pr-28 py-4 text-[15px] font-serif bg-transparent border-0 focus:outline-none resize-none placeholder:text-[var(--subtle)] placeholder:italic"
               disabled={loading}
               maxLength={500}
             />
             <button
               onClick={() => submit(query)}
               disabled={loading || !query.trim()}
-              className="absolute right-3 bottom-3 bg-[var(--lavender-deep)] text-white text-sm font-semibold px-4 py-2 rounded-full hover:bg-[var(--lavender)] disabled:opacity-30 transition-colors"
-              style={{ boxShadow: "0 4px 14px -4px rgba(106, 79, 199, 0.35)" }}
+              className="absolute right-0 bottom-3 text-[10px] uppercase tracking-caps text-[var(--ink)] hover:opacity-60 disabled:opacity-30 transition-opacity"
             >
-              {loading ? "FINDING..." : "추천받기 →"}
+              {loading ? "Curating..." : "Submit →"}
             </button>
           </div>
 
           {!result && !loading && (
             <div className="mt-6">
-              <p className="font-pixel text-[9px] text-[var(--lavender)] mb-3">EXAMPLES</p>
-              <div className="flex flex-wrap gap-2">
+              <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-3">Examples</p>
+              <div className="space-y-2">
                 {EXAMPLES.map((ex) => (
                   <button
                     key={ex}
                     onClick={() => { setQuery(ex); submit(ex); }}
-                    className="text-xs px-3.5 py-1.5 rounded-full bg-white border border-[var(--border)] text-[var(--muted)] hover:border-[var(--lavender)] hover:text-[var(--lavender-deep)] transition-colors"
+                    className="block w-full text-left text-[13px] font-serif italic text-[var(--muted)] hover:text-[var(--ink)] transition-colors py-2 border-b rule-hairline"
                   >
                     {ex}
                   </button>
@@ -134,16 +130,15 @@ export default function ConsultPage() {
 
         {loading && (
           <div className="py-16 text-center">
-            <p className="font-pixel text-[10px] text-[var(--lavender)] mb-3 animate-shimmer">FINDING . . .</p>
-            <p className="font-rounded text-xl text-grad-magic">
-              큐레이터가 살펴보고 있어요
+            <p className="font-serif italic text-lg text-[var(--muted)]">
+              큐레이터가 카탈로그를 살펴보고 있습니다…
             </p>
-            <p className="font-pixel text-[8px] mt-3 text-[var(--subtle)]">MAX 30s</p>
+            <p className="text-[10px] uppercase tracking-caps text-[var(--subtle)] mt-3">Max 30s</p>
           </div>
         )}
 
         {error && (
-          <div className="p-4 rounded-2xl bg-[var(--lavender-soft)] text-[var(--lavender-deep)] text-sm border border-[var(--lavender)]">
+          <div className="border-t border-b border-[var(--ink)] py-4 text-sm">
             {error}
           </div>
         )}
@@ -151,57 +146,60 @@ export default function ConsultPage() {
         {result && result.products.length > 0 && (
           <div>
             {result.overall_note && (
-              <div className="mb-6 p-5 rounded-3xl bg-grad-magic text-white" style={{ boxShadow: "0 6px 20px -6px rgba(155, 134, 224, 0.4)" }}>
-                <p className="font-pixel text-[9px] text-white/90 mb-2">EDITOR'S NOTE</p>
-                <p className="text-sm leading-relaxed font-rounded">
+              <div className="mb-10 border-y rule-hairline py-6">
+                <p className="text-[10px] uppercase tracking-caps text-[var(--muted)] mb-2">Editor's note</p>
+                <p className="font-serif text-base text-[var(--ink)] leading-relaxed">
                   {result.overall_note}
                 </p>
               </div>
             )}
-            <div className="space-y-4">
+            <div className="divide-y divide-[var(--hairline)]">
               {result.products.map((p, i) => (
                 <a
                   key={p.item_id}
                   href={p.product_url ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block bg-white rounded-3xl overflow-hidden hover:-translate-y-0.5 transition-transform"
-                  style={{ boxShadow: "0 4px 16px -6px rgba(155, 134, 224, 0.25)" }}
+                  className="group flex gap-5 py-6 first:pt-0"
                 >
-                  <div className="flex gap-4 p-3.5">
-                    {p.thumbnail_url && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={p.thumbnail_url}
-                        alt={p.item_name}
-                        className="w-28 h-28 object-cover rounded-2xl shrink-0 bg-[var(--lavender-soft)]"
-                      />
+                  <span className="text-[10px] uppercase tracking-caps text-[var(--subtle)] num-tabular pt-1 w-6 shrink-0">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {p.thumbnail_url && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={p.thumbnail_url}
+                      alt={p.item_name}
+                      className="w-28 h-32 object-cover shrink-0 bg-[var(--border)]/40"
+                    />
+                  )}
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    {p.brand_name && (
+                      <p className="text-[10px] uppercase tracking-caps text-[var(--muted)]">
+                        {p.brand_name}
+                      </p>
                     )}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2 mb-1">
-                        <span className="font-pixel text-[9px] text-[var(--lavender-deep)]">{String(i + 1).padStart(2, "0")}</span>
-                        <span className="font-pixel text-[8px] text-[var(--lavender)] bg-[var(--lavender-soft)] px-2 py-1 rounded">{p.shop_category}</span>
-                      </div>
-                      {p.brand_name && (
-                        <p className="font-pixel text-[8px] text-[var(--lavender)] mb-0.5">{p.brand_name}</p>
-                      )}
-                      <p className="text-sm font-semibold leading-snug line-clamp-2 mb-1.5">
-                        {p.item_name}
+                    <p className="text-sm leading-snug text-[var(--ink)] group-hover:underline">
+                      {p.item_name}
+                    </p>
+                    <p className="text-sm num-tabular">
+                      {p.display_price.toLocaleString()}원
+                    </p>
+                    <p className="font-serif italic text-[12px] text-[var(--muted)] leading-relaxed pt-1">
+                      “{p.reason}”
+                    </p>
+                    {p.shop_category && (
+                      <p className="text-[10px] uppercase tracking-caps text-[var(--subtle)] pt-1">
+                        {p.shop_category}
                       </p>
-                      <p className="text-sm font-bold text-[var(--ink)] mb-2 num-tabular">
-                        {p.display_price.toLocaleString()}원
-                      </p>
-                      <p className="text-[11px] text-[var(--muted)] leading-relaxed italic font-rounded">
-                        “{p.reason}”
-                      </p>
-                    </div>
+                    )}
                   </div>
                 </a>
               ))}
             </div>
             <button
               onClick={() => { setResult(null); setQuery(""); }}
-              className="mt-6 w-full py-3 rounded-full bg-white border-2 border-[var(--lavender)] text-[var(--lavender-deep)] text-sm font-semibold hover:bg-[var(--lavender-soft)] transition-colors"
+              className="mt-10 w-full py-3 border border-[var(--ink)] text-xs uppercase tracking-caps hover:bg-[var(--ink)] hover:text-[var(--bg)] transition-colors"
             >
               다시 찾기
             </button>
@@ -210,9 +208,8 @@ export default function ConsultPage() {
 
         {result && result.products.length === 0 && (
           <div className="py-16 text-center">
-            <p className="font-pixel text-[10px] text-[var(--lavender)] mb-3">NO RESULTS</p>
-            <p className="font-rounded text-lg text-[var(--muted)]">
-              {result.overall_note || "조건에 맞는 선물을 찾지 못했어요"}
+            <p className="font-serif italic text-lg text-[var(--muted)]">
+              {result.overall_note || "조건에 맞는 상품을 찾지 못했습니다."}
             </p>
           </div>
         )}

@@ -25,7 +25,7 @@ const PRICE_RANGES = [
 ];
 
 const SORT_OPTIONS = [
-  { label: "새로 들어온 순", value: "first_seen" },
+  { label: "DB 입력순", value: "first_seen" },
   { label: "감도 순", value: "rarity" },
   { label: "신상품 순", value: "new" },
   { label: "좋아요 순", value: "like_count" },
@@ -40,58 +40,73 @@ interface Props {
 }
 
 const selectCls =
-  "h-9 rounded-full border-2 border-[var(--border)] bg-white/80 px-4 pr-8 text-sm text-[var(--ink)] focus:outline-none focus:border-[var(--lavender)] cursor-pointer appearance-none transition-colors font-rounded";
+  "h-9 rounded-none border-0 bg-transparent pl-0 pr-5 text-[11px] uppercase tracking-caps text-[var(--ink)] focus:outline-none cursor-pointer appearance-none hover:text-[var(--muted)] transition-colors";
+
+function SelectField({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative inline-flex items-center border-b rule-hairline hover:border-[var(--ink)] transition-colors">
+      {children}
+      <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-[9px] text-[var(--muted)]">▾</span>
+    </div>
+  );
+}
 
 export default function FilterBar({ filters, onChange }: Props) {
   return (
-    <div className="bg-white/50 backdrop-blur-sm border-b border-[var(--border)] sticky top-[var(--header-h,124px)] z-10">
-      <div className="max-w-7xl mx-auto px-5 py-3 flex flex-wrap items-center gap-2">
-        <select
-          value={filters.category}
-          onChange={(e) => onChange({ category: e.target.value })}
-          className={selectCls}
-        >
-          <option value="">전체 카테고리</option>
-          {CATEGORIES.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
+    <div className="bg-[var(--bg)]/90 backdrop-blur-md border-b rule-hairline sticky top-[var(--header-h,120px)] z-10">
+      <div className="max-w-[1400px] mx-auto px-8 sm:px-12 py-3 flex flex-wrap items-center gap-x-8 gap-y-2">
+        <SelectField>
+          <select
+            value={filters.category}
+            onChange={(e) => onChange({ category: e.target.value })}
+            className={selectCls}
+          >
+            <option value="">전체 카테고리</option>
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </SelectField>
 
-        <select
-          value={filters.price_range}
-          onChange={(e) => onChange({ price_range: e.target.value })}
-          className={selectCls}
-        >
-          {PRICE_RANGES.map((r) => (
-            <option key={r.value} value={r.value}>
-              {r.label}
-            </option>
-          ))}
-        </select>
+        <SelectField>
+          <select
+            value={filters.price_range}
+            onChange={(e) => onChange({ price_range: e.target.value })}
+            className={selectCls}
+          >
+            {PRICE_RANGES.map((r) => (
+              <option key={r.value} value={r.value}>
+                {r.label}
+              </option>
+            ))}
+          </select>
+        </SelectField>
 
-        <select
-          value={filters.sort}
-          onChange={(e) => onChange({ sort: e.target.value })}
-          className={selectCls}
-        >
-          {SORT_OPTIONS.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.label}
-            </option>
-          ))}
-        </select>
+        <SelectField>
+          <select
+            value={filters.sort}
+            onChange={(e) => onChange({ sort: e.target.value })}
+            className={selectCls}
+          >
+            {SORT_OPTIONS.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.label}
+              </option>
+            ))}
+          </select>
+        </SelectField>
 
         <button
           onClick={() => onChange({ new_only: !filters.new_only })}
-          className={`h-9 px-4 rounded-full text-sm font-rounded border-2 transition-all ${
+          className={`ml-auto text-[10px] uppercase tracking-caps pb-0.5 border-b transition-colors ${
             filters.new_only
-              ? "bg-[var(--lavender-deep)] text-white border-transparent shadow-sm"
-              : "bg-white/80 text-[var(--muted)] border-[var(--border)] hover:border-[var(--lavender)] hover:text-[var(--lavender-deep)]"
+              ? "border-[var(--ink)] text-[var(--ink)]"
+              : "border-transparent text-[var(--muted)] hover:text-[var(--ink)]"
           }`}
         >
-          신상품만
+          New Arrivals Only
         </button>
       </div>
     </div>
